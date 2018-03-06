@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Sistema de Reservas Deportivas</title>
+    </h:head>
+    <h:body>
+
+        <div class="ui-g">
+            <div class="ui-g-4">
+                <div align="right"><img src="img/unicauca.png" border="0" width="120" height="120"></img></div>
+            </div>
+
+            <div class="ui-g-8">
+                <div align="left"><p:outputLabel style="font-size:20px">_______________________________________________</p:outputLabel></div>
+                <div align="left"><p:outputLabel style="font-size:40px">Sistema de Reservas Tulcan</p:outputLabel></div>
+                <div align="left"><p:outputLabel style="font-size:20px">_______________________________________________</p:outputLabel></div>
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+
+        <table align="center">
+            <tr>
+                <td><p:outputLabel for="usuario" value="Usuario:  " /></td>
+                <td><p:inputText id="usuario" /></td>
+            </tr>
+            <tr>
+                <td><p:outputLabel for="usuario" value="Contraseña:  " /></td>
+                <td><p:inputText id="usuario" /></td>
+            </tr>
+            <tr align="center">
+                <td></td><td><p:commandButton value="Ingresar" id="principal" action="#{escenarioBean.principal}" styleClass="ui-priority-primary" /></td>
+            </tr>
+        </table>
+
+
+
+
+    </h:body>
+</html>
+
