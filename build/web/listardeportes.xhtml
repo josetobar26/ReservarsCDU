@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    
+    <h:body>
+
+        <div class="ui-g">
+            <div class="ui-g-4">
+                <div align="right"><img src="img/unicauca.png" border="0" width="120" height="120"></img></div>
+            </div>
+
+            <div class="ui-g-8">
+                <div align="left"><p:outputLabel style="font-size:20px">_______________________________________________</p:outputLabel></div>
+                <div align="left"><p:outputLabel style="font-size:40px">Sistema de Reservas Tulcan</p:outputLabel></div>
+                <div align="left"><p:outputLabel style="font-size:20px">_______________________________________________</p:outputLabel></div>
+            </div>
+        </div>
+        
+        <div class="ui-g">
+            <div class="ui-g-10">
+                <p:outputLabel styleClass="panelGridCenter" style="font-size:20px">Gestión de Escenarios Deportivos</p:outputLabel>
+            </div>
+            <div class="ui-g-2">
+                <div align="rigth"><p:commandButton value="Agregar Escenario" id="create" action="#{escenarioBean.create}" styleClass="ui-priority-primary" /></div>
+            </div>
+        </div>
+        
+        <div class="ui-g">
+            <div class="ui-g-3">
+                <h:form>
+                    <p:panelMenu style="width:325px">
+                        <p:submenu label="Menu">
+                            <p:menuitem value="Inicio" actionListener="#{escenarioBean.paginaPrincipal}" icon="ui-icon-extlink" />
+                            <p:menuitem value="Reservas" actionListener="#{CRUD_Escenarios.index}"  icon="ui-icon-arrowrefresh-1-w" />
+
+                            <p:submenu label="Escenarios Deportivos" icon="ui-icon-heart">
+                                <p:menuitem value="Gestionar Escenarios Deportivos" actionListener="#{menuView.listardeportes}" icon="ui-icon-home" />
+                                <p:menuitem value="Agregar un Escenario Deportivo" actionListener="#{menuView.update}" icon="ui-icon-document" />
+                            </p:submenu>
+
+                            <p:submenu label="Elementos Deportivos" icon="ui-icon-heart">
+                                <p:menuitem value="Gestionar Elementos Deportivos" actionListener="#{menuView.update}" icon="ui-icon-home" />
+                                <p:menuitem value="Agregar un Elemento Deportivo" actionListener="#{menuView.update}" icon="ui-icon-document" />
+                            </p:submenu>
+                        </p:submenu>
+
+                    </p:panelMenu>
+                </h:form>
+            </div>
+
+            <div class="ui-g-9">
+                <h:form id="form">
+                    <p:dataTable var="obj" value="#{escenarioBean.list}">
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{obj.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{obj.descripcion}"/>
+                        </p:column>
+                        <p:column  headerText="Acción">
+                            <div styleClass="panelGridCenter">
+                                <p:commandButton update=":form" oncomplete="" icon="ui-icon-search" title="View" value="Ver">
+                                    <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
+                                </p:commandButton>
+                                <p:commandButton update=":form" oncomplete="" icon="ui-icon-pencil" title="Edit" value="Editar">
+                                    <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
+                                </p:commandButton>
+                                <p:commandButton update=":form" oncomplete="" icon="ui-icon-close" title="Remove" value="Eliminar">
+                                    <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
+                                </p:commandButton>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>       
+            </div>
+        </div>
+    </h:body>
+</html>
+

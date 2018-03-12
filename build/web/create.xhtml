@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gestionar Escenarios</title>
+    </h:head>
+    <h:body>
+
+        <div class="ui-g">
+            <div class="ui-g-4">
+                <div align="right"><img src="img/unicauca.png" border="0" width="120" height="120"></img></div>
+            </div>
+
+            <div class="ui-g-8">
+                <div align="left"><p:outputLabel style="font-size:20px">_______________________________________________</p:outputLabel></div>
+                <div align="left"><p:outputLabel style="font-size:40px">Sistema de Reservas Tulcan</p:outputLabel></div>
+                <div align="left"><p:outputLabel style="font-size:20px">_______________________________________________</p:outputLabel></div>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-10">
+                <p:outputLabel styleClass="panelGridCenter" style="font-size:20px">Gestión de Escenarios Deportivos</p:outputLabel>
+            </div>
+         </div>
+
+        <div class="ui-g">
+            <div class="ui-g-3">
+                <h:form>
+                    <p:panelMenu style="width:325px">
+                        <p:submenu label="Menu">
+                            <p:menuitem value="Inicio" actionListener="#{escenarioBean.paginaPrincipal}" icon="ui-icon-extlink" />
+                            <p:menuitem value="Reservas" actionListener="#{CRUD_Escenarios.index}"  icon="ui-icon-arrowrefresh-1-w" />
+
+                            <p:submenu label="Escenarios Deportivos" icon="ui-icon-heart">
+                                <p:menuitem value="Gestionar Escenarios Deportivos" actionListener="#{menuView.listardeportes}" icon="ui-icon-home" />
+                                <p:menuitem value="Agregar un Escenario Deportivo" actionListener="#{menuView.update}" icon="ui-icon-document" />
+                            </p:submenu>
+
+                            <p:submenu label="Elementos Deportivos" icon="ui-icon-heart">
+                                <p:menuitem value="Gestionar Elementos Deportivos" actionListener="#{menuView.update}" icon="ui-icon-home" />
+                                <p:menuitem value="Agregar un Elemento Deportivo" actionListener="#{menuView.update}" icon="ui-icon-document" />
+                            </p:submenu>
+                        </p:submenu>
+
+                    </p:panelMenu>
+                </h:form>
+            </div>
+
+            <div class="ui-g-9">
+                <h:form id="idcreate">
+                    <p:panel id="panell" header="Gestión de Escenarios" style="margin-bottom:10px;">
+                        <div class="ui-g">
+                            <div class="ui-g-8">
+
+                                <p:messages/>
+                                <h3>Agregar Escenario</h3>
+
+                                <h:panelGrid columns="4" cellpadding="5">
+                                    <p:outputLabel for="name" value="Nombre:" />
+                                    <p:inputText id="name" value="#{escenarioBean.create.nombre}" required="true">
+                                        <f:validateLength minimum="2" maximum="30"/>
+                                    </p:inputText>  
+                                    <p:message for="name" />
+                                    <h:outputText value="#{escenarioBean.create.nombre}" />
+
+                                    <p:outputLabel for="name" value="Ubicacion:" />
+                                    <p:selectOneMenu id="ubicacion" value="#{escenarioBean.create.ubicacion}" style="width:125px" required="true">
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems value="#{escenarioBean.estado}" />
+
+                                    </p:selectOneMenu>
+                                    <p:message for="ubicacion" />
+                                    <h:outputText value="#{escenarioBean.create.ubicacion}" />
+
+                                    <p:outputLabel for="textarea" value="Descripcion:" />
+                                    <p:inputTextarea id="textarea" required="true" value="#{escenarioBean.create.descripcion}" >
+                                        <f:validateLength minimum="3" maximum="200" />
+                                    </p:inputTextarea>
+                                    <p:message for="textarea" />
+                                    <h:outputText value="#{escenarioBean.create.descripcion}" />
+
+
+
+
+                                    <p:outputLabel for="name" value="Estado:" />
+                                    <p:selectOneMenu id="estado" value="#{escenarioBean.create.estado}" style="width:125px" required="true">
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems value="#{escenarioBean.ubicacion}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="estado" />
+                                    <h:outputText value="#{escenarioBean.create.estado}" />
+
+
+                                    <p:outputLabel for="name" value="Deporte:" />
+                                    <p:selectOneMenu id="iddeporte" value="#{escenarioBean.selectDe}" converter="deporteConverter" style="width:125px">
+                                        <p:ajax listener="#{deporteBean.changeDeporte}" update="" />
+                                        <f:selectItem itemLabel="Seleccione un Deporte" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{deporteBean.deportes}" var="deporte"  itemLabel="#{deporte.nombre}" itemValue="#{deporte}" />
+
+                                    </p:selectOneMenu>
+                                    <p:message for="iddeporte" />
+                                    <h:outputText value="#{escenarioBean.selectDe}" />
+
+                                    <p:outputLabel for="name" value="" />   
+                                    <p:commandButton value="Agregar Deporte" update="depAsociado" icon="ui-icon-search" id="agregarDep" actionListener="#{escenarioBean.agregarDeporte}" styleClass="ui-priority-primary" />
+
+
+                                </h:panelGrid>
+
+
+
+                            </div>
+                            <div class="ui-g-4">
+                                <h3>Deportes Asociados</h3>
+                                <p:dataTable id="depAsociado" var="obj" value="#{escenarioBean.deportes}">
+                                    <p:column headerText="Nombre Deporte: ">
+                                        <h:outputText value="#{obj.nombre}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div> 
+                        <div class="ui-g">
+                            <div class="ui-g-6">
+                                <p:commandButton value="Regresar" update="" icon="ui-icon-search" id="regresar" action="#{escenarioBean.confirmar}" styleClass="ui-priority-primary"  />
+
+                            </div>
+                            <div class="ui-g-6">
+                                <p:commandButton value="Confirmar" update="" icon="ui-icon-search" id="create2"  ajax="false"    actionListener="#{escenarioBean.save}" action="#{escenarioBean.confirmar}" styleClass="ui-priority-primary" validateClient="true"/>
+
+                            </div>
+
+                        </div>
+                    </p:panel>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+
