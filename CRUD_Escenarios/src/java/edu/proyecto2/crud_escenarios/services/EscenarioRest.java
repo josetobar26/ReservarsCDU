@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author jose
  */
+
 @Path("Escenario")
 public class EscenarioRest {
     private EscenarioBean escenariobean=new EscenarioBean();
