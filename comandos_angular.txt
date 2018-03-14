@@ -1,0 +1,4 @@
+---Comandos---
+
+--Generar componente--
+ng generate component heroes
