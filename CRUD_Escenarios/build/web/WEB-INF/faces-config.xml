@@ -16,4 +16,9 @@
 		<to-view-id>listardeportes.html</to-view-id>
 	</navigation-case>
     </navigation-rule>
+    
+    <!--<dependency> <groupId>com.google.guava</groupId> 
+    <artifactId>guava</artifactId> 
+    <version>16.0</version> 
+    </dependency> -->
 </faces-config>
