@@ -6,14 +6,16 @@
 
     <navigation-rule>
 	
-	<navigation-case>
-
-		<from-outcome>create</from-outcome>
-		<to-view-id>create.html</to-view-id>
-	</navigation-case>
         <navigation-case>
-		<from-outcome>listardeportes</from-outcome>
-		<to-view-id>listardeportes.html</to-view-id>
-	</navigation-case>
+
+            <from-outcome>create</from-outcome>
+            <to-view-id>create.html</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>listardeportes</from-outcome>
+            <to-view-id>listardeportes.html</to-view-id>
+        </navigation-case>
     </navigation-rule>
-</faces-config>
+   
+   
+</faces-config> 
