@@ -6,14 +6,25 @@
 
     <navigation-rule>
 	
-	<navigation-case>
-
-		<from-outcome>create</from-outcome>
-		<to-view-id>create.html</to-view-id>
-	</navigation-case>
         <navigation-case>
-		<from-outcome>listardeportes</from-outcome>
-		<to-view-id>listardeportes.html</to-view-id>
-	</navigation-case>
+
+            <from-outcome>create</from-outcome>
+            <to-view-id>create.html</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>listardeportes</from-outcome>
+            <to-view-id>listardeportes.html</to-view-id>
+        </navigation-case>
     </navigation-rule>
+<<<<<<< HEAD
+   
+   
+</faces-config> 
+=======
+    
+    <!--<dependency> <groupId>com.google.guava</groupId> 
+    <artifactId>guava</artifactId> 
+    <version>16.0</version> 
+    </dependency> -->
 </faces-config>
+>>>>>>> d1ad7d79611d6af03bf0ee6d5b616b05e914f940
