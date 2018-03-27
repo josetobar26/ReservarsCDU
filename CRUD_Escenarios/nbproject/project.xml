@@ -34,7 +34,11 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+<<<<<<< HEAD
                     <file>${libs.guava_16.classpath}</file>
+=======
+                    <file>${file.reference.guava-16.0.1.jar}</file>
+>>>>>>> d1ad7d79611d6af03bf0ee6d5b616b05e914f940
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
