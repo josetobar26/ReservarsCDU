@@ -10,6 +10,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
 import { EspaciodeportivoService } from './espaciodeportivo.service';
 import { AgregarescenarioComponent } from './agregarescenario/agregarescenario.component';
+import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 
 
 
@@ -18,7 +19,8 @@ import { AgregarescenarioComponent } from './agregarescenario/agregarescenario.c
     AppComponent,
     EspacioDeportivosComponent,
     MessagesComponent,
-    AgregarescenarioComponent
+    AgregarescenarioComponent,
+    MostrarFotoComponent
   ],
   imports: [
     BrowserModule,
