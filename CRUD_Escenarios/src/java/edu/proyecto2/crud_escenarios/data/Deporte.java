@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -28,9 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "deporte")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Deporte.findAll", query = "SELECT d FROM Deporte d")
-    , @NamedQuery(name = "Deporte.findByIdDeporte", query = "SELECT d FROM Deporte d WHERE d.idDeporte = :idDeporte")
-    , @NamedQuery(name = "Deporte.findByNombre", query = "SELECT d FROM Deporte d WHERE d.nombre = :nombre")})
+    @NamedQuery(name = "Deporte_1.findAll", query = "SELECT d FROM Deporte_1 d")
+    , @NamedQuery(name = "Deporte_1.findByIdDeporte", query = "SELECT d FROM Deporte_1 d WHERE d.idDeporte = :idDeporte")
+    , @NamedQuery(name = "Deporte_1.findByNombre", query = "SELECT d FROM Deporte_1 d WHERE d.nombre = :nombre")})
 public class Deporte implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +42,8 @@ public class Deporte implements Serializable {
     @Column(name = "idDeporte")
     private Integer idDeporte;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
     @Column(name = "nombre")
     private String nombre;
     @ManyToMany(mappedBy = "deporteList")
@@ -104,7 +108,7 @@ public class Deporte implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.proyecto2.crud_escenarios.data.Deporte[ idDeporte=" + idDeporte + " ]";
+        return "edu.proyecto2.crud_escenarios.data.Deporte_1[ idDeporte=" + idDeporte + " ]";
     }
     
 }

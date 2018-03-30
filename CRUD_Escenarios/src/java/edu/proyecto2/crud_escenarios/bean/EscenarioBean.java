@@ -7,7 +7,8 @@ package edu.proyecto2.crud_escenarios.bean;
 
 import edu.proyecto2.crud_escenarios.data.Deporte;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
-import edu.proyecto2.crud_escenarios.data.EspacioDeportivoJpaController;
+import edu.proyecto2.crud_escenarios.jpa.EspacioDeportivoJpaController;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

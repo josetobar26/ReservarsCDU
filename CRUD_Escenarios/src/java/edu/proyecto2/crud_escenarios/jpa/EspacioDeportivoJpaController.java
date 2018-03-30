@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.proyecto2.crud_escenarios.data;
+package edu.proyecto2.crud_escenarios.jpa;
 
-import edu.proyecto2.crud_escenarios.data.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import edu.proyecto2.crud_escenarios.data.Deporte;
+import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import java.util.ArrayList;
 import java.util.List;
+import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
+import edu.proyecto2.crud_escenarios.jpa.exceptions.IllegalOrphanException;
+import edu.proyecto2.crud_escenarios.jpa.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -35,6 +39,9 @@ public class EspacioDeportivoJpaController implements Serializable {
         if (espacioDeportivo.getDeporteList() == null) {
             espacioDeportivo.setDeporteList(new ArrayList<Deporte>());
         }
+        if (espacioDeportivo.getReservaEspacioList() == null) {
+            espacioDeportivo.setReservaEspacioList(new ArrayList<ReservaEspacio>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -45,10 +52,25 @@ public class EspacioDeportivoJpaController implements Serializable {
                 attachedDeporteList.add(deporteListDeporteToAttach);
             }
             espacioDeportivo.setDeporteList(attachedDeporteList);
+            List<ReservaEspacio> attachedReservaEspacioList = new ArrayList<ReservaEspacio>();
+            for (ReservaEspacio reservaEspacioListReservaEspacioToAttach : espacioDeportivo.getReservaEspacioList()) {
+                reservaEspacioListReservaEspacioToAttach = em.getReference(reservaEspacioListReservaEspacioToAttach.getClass(), reservaEspacioListReservaEspacioToAttach.getIdReserva());
+                attachedReservaEspacioList.add(reservaEspacioListReservaEspacioToAttach);
+            }
+            espacioDeportivo.setReservaEspacioList(attachedReservaEspacioList);
             em.persist(espacioDeportivo);
             for (Deporte deporteListDeporte : espacioDeportivo.getDeporteList()) {
                 deporteListDeporte.getEspacioDeportivoList().add(espacioDeportivo);
                 deporteListDeporte = em.merge(deporteListDeporte);
+            }
+            for (ReservaEspacio reservaEspacioListReservaEspacio : espacioDeportivo.getReservaEspacioList()) {
+                EspacioDeportivo oldIdEspacioOfReservaEspacioListReservaEspacio = reservaEspacioListReservaEspacio.getIdEspacio();
+                reservaEspacioListReservaEspacio.setIdEspacio(espacioDeportivo);
+                reservaEspacioListReservaEspacio = em.merge(reservaEspacioListReservaEspacio);
+                if (oldIdEspacioOfReservaEspacioListReservaEspacio != null) {
+                    oldIdEspacioOfReservaEspacioListReservaEspacio.getReservaEspacioList().remove(reservaEspacioListReservaEspacio);
+                    oldIdEspacioOfReservaEspacioListReservaEspacio = em.merge(oldIdEspacioOfReservaEspacioListReservaEspacio);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -58,7 +80,7 @@ public class EspacioDeportivoJpaController implements Serializable {
         }
     }
 
-    public void edit(EspacioDeportivo espacioDeportivo) throws NonexistentEntityException, Exception {
+    public void edit(EspacioDeportivo espacioDeportivo) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -66,6 +88,20 @@ public class EspacioDeportivoJpaController implements Serializable {
             EspacioDeportivo persistentEspacioDeportivo = em.find(EspacioDeportivo.class, espacioDeportivo.getIdEspacio());
             List<Deporte> deporteListOld = persistentEspacioDeportivo.getDeporteList();
             List<Deporte> deporteListNew = espacioDeportivo.getDeporteList();
+            List<ReservaEspacio> reservaEspacioListOld = persistentEspacioDeportivo.getReservaEspacioList();
+            List<ReservaEspacio> reservaEspacioListNew = espacioDeportivo.getReservaEspacioList();
+            List<String> illegalOrphanMessages = null;
+            for (ReservaEspacio reservaEspacioListOldReservaEspacio : reservaEspacioListOld) {
+                if (!reservaEspacioListNew.contains(reservaEspacioListOldReservaEspacio)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain ReservaEspacio " + reservaEspacioListOldReservaEspacio + " since its idEspacio field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             List<Deporte> attachedDeporteListNew = new ArrayList<Deporte>();
             for (Deporte deporteListNewDeporteToAttach : deporteListNew) {
                 deporteListNewDeporteToAttach = em.getReference(deporteListNewDeporteToAttach.getClass(), deporteListNewDeporteToAttach.getIdDeporte());
@@ -73,6 +109,13 @@ public class EspacioDeportivoJpaController implements Serializable {
             }
             deporteListNew = attachedDeporteListNew;
             espacioDeportivo.setDeporteList(deporteListNew);
+            List<ReservaEspacio> attachedReservaEspacioListNew = new ArrayList<ReservaEspacio>();
+            for (ReservaEspacio reservaEspacioListNewReservaEspacioToAttach : reservaEspacioListNew) {
+                reservaEspacioListNewReservaEspacioToAttach = em.getReference(reservaEspacioListNewReservaEspacioToAttach.getClass(), reservaEspacioListNewReservaEspacioToAttach.getIdReserva());
+                attachedReservaEspacioListNew.add(reservaEspacioListNewReservaEspacioToAttach);
+            }
+            reservaEspacioListNew = attachedReservaEspacioListNew;
+            espacioDeportivo.setReservaEspacioList(reservaEspacioListNew);
             espacioDeportivo = em.merge(espacioDeportivo);
             for (Deporte deporteListOldDeporte : deporteListOld) {
                 if (!deporteListNew.contains(deporteListOldDeporte)) {
@@ -84,6 +127,17 @@ public class EspacioDeportivoJpaController implements Serializable {
                 if (!deporteListOld.contains(deporteListNewDeporte)) {
                     deporteListNewDeporte.getEspacioDeportivoList().add(espacioDeportivo);
                     deporteListNewDeporte = em.merge(deporteListNewDeporte);
+                }
+            }
+            for (ReservaEspacio reservaEspacioListNewReservaEspacio : reservaEspacioListNew) {
+                if (!reservaEspacioListOld.contains(reservaEspacioListNewReservaEspacio)) {
+                    EspacioDeportivo oldIdEspacioOfReservaEspacioListNewReservaEspacio = reservaEspacioListNewReservaEspacio.getIdEspacio();
+                    reservaEspacioListNewReservaEspacio.setIdEspacio(espacioDeportivo);
+                    reservaEspacioListNewReservaEspacio = em.merge(reservaEspacioListNewReservaEspacio);
+                    if (oldIdEspacioOfReservaEspacioListNewReservaEspacio != null && !oldIdEspacioOfReservaEspacioListNewReservaEspacio.equals(espacioDeportivo)) {
+                        oldIdEspacioOfReservaEspacioListNewReservaEspacio.getReservaEspacioList().remove(reservaEspacioListNewReservaEspacio);
+                        oldIdEspacioOfReservaEspacioListNewReservaEspacio = em.merge(oldIdEspacioOfReservaEspacioListNewReservaEspacio);
+                    }
                 }
             }
             em.getTransaction().commit();
@@ -103,7 +157,7 @@ public class EspacioDeportivoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -114,6 +168,17 @@ public class EspacioDeportivoJpaController implements Serializable {
                 espacioDeportivo.getIdEspacio();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The espacioDeportivo with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<ReservaEspacio> reservaEspacioListOrphanCheck = espacioDeportivo.getReservaEspacioList();
+            for (ReservaEspacio reservaEspacioListOrphanCheckReservaEspacio : reservaEspacioListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EspacioDeportivo (" + espacioDeportivo + ") cannot be destroyed since the ReservaEspacio " + reservaEspacioListOrphanCheckReservaEspacio + " in its reservaEspacioList field has a non-nullable idEspacio field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             List<Deporte> deporteList = espacioDeportivo.getDeporteList();
             for (Deporte deporteListDeporte : deporteList) {
