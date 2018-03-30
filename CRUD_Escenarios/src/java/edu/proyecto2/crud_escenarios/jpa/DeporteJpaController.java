@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.proyecto2.crud_escenarios.data;
+package edu.proyecto2.crud_escenarios.jpa;
 
-import edu.proyecto2.crud_escenarios.data.exceptions.NonexistentEntityException;
+import edu.proyecto2.crud_escenarios.data.Deporte;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
+import edu.proyecto2.crud_escenarios.jpa.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

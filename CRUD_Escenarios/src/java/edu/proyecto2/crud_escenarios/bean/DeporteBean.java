@@ -6,7 +6,8 @@
 package edu.proyecto2.crud_escenarios.bean;
 
 import edu.proyecto2.crud_escenarios.data.Deporte;
-import edu.proyecto2.crud_escenarios.data.DeporteJpaController;
+import edu.proyecto2.crud_escenarios.jpa.DeporteJpaController;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
