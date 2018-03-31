@@ -5,6 +5,8 @@ import { MessageService } from './message.service';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { EspacioDeportivo } from './espaciodeportivo';
+import { Deporte } from './deporte';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -14,6 +16,7 @@ export class EspaciodeportivoService {
 	
 
 	private heroesUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario';	
+  private deportesUrl = 'http://localhost:8084/CRUD_Escenarios/proyectoCDU/Escenario/deportes';
 
   constructor(private http: HttpClient,
   private messageService: MessageService) { }
@@ -26,7 +29,15 @@ export class EspaciodeportivoService {
       tap(espacios => this.log(`fetched heroes`)),
       catchError(this.handleError('getEspaciodeportivos', []))
     );
-}
+  }
+  getDeportes (): Observable<Deporte[]> {
+  return this.http.get<Deporte[]>(this.deportesUrl)
+    .pipe(
+      tap(deportes => this.log(`fetched deportes`)),
+      catchError(this.handleError('getDeportes', []))
+    );
+  }
+
    private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
  

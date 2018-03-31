@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'espaciodeportivos', component: EspacioDeportivosComponent },
    { path: 'agregarescenario', component: AgregarescenarioComponent },
    { path: 'horariofijo', component: HorarioFijoComponent }
-
+   
 ];
 
 @NgModule({
