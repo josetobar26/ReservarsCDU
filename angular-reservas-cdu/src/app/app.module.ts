@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule }     from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deportivos.component';
@@ -11,6 +12,7 @@ import { MessageService } from './message.service';
 import { EspaciodeportivoService } from './espaciodeportivo.service';
 import { AgregarescenarioComponent } from './agregarescenario/agregarescenario.component';
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
+import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 
 
 
@@ -20,13 +22,15 @@ import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
     EspacioDeportivosComponent,
     MessagesComponent,
     AgregarescenarioComponent,
-    MostrarFotoComponent
+    MostrarFotoComponent,
+    HorarioFijoComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule.forRoot()
 
 
   ],
