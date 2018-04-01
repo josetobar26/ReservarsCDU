@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./horario-fijo.component.css']
 })
 export class HorarioFijoComponent implements OnInit {
-
+    
   constructor() { }
 
   ngOnInit() {
