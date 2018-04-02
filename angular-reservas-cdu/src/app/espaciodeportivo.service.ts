@@ -37,6 +37,15 @@ export class EspaciodeportivoService {
       catchError(this.handleError('getDeportes', []))
     );
   }
+  getEscenariosforid (id: number): Observable<EspacioDeportivo[]> {
+  const url= `${this.heroesUrl}/EspacioDeporte/${id}`;
+  return this.http.get<EspacioDeportivo[]>(url)
+    .pipe(
+      tap(escenarios => this.log(`fetched hero id=${id}`)),
+      catchError(this.handleError('getEscenariosforid', []))
+    );
+  }
+
 
    private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
