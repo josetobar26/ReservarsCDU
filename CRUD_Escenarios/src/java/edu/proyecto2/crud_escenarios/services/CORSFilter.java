@@ -25,8 +25,6 @@ public class CORSFilter implements ContainerResponseFilter {
         cresp.getHeaders().add("Access-Control-Allow-Credentials", "true");
         cresp.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD");
         cresp.getHeaders().add("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
-
-      
     
     }
 

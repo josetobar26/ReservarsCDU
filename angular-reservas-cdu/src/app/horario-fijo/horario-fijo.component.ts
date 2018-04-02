@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Deporte } from '../deporte';
 import { EspaciodeportivoService } from '../espaciodeportivo.service';
+import { EspacioDeportivo} from '../espaciodeportivo';
 
 @Component({
   selector: 'app-horario-fijo',
@@ -10,8 +11,12 @@ import { EspaciodeportivoService } from '../espaciodeportivo.service';
 export class HorarioFijoComponent implements OnInit {
 
   private deportes:Deporte[];
-  constructor(private espacioService:EspaciodeportivoService) { }
+   selectedDeporte:Deporte ;
+   selectedEspacio:EspacioDeportivo;
+   private escenarios: EspacioDeportivo[];
 
+  constructor(private espacioService:EspaciodeportivoService) { }
+ 
   ngOnInit() {
   	this.getDeportes();
   }
@@ -20,6 +25,14 @@ export class HorarioFijoComponent implements OnInit {
     this.espacioService.getDeportes()
     .subscribe(deportes => this.deportes = deportes);
     
+  }
+  selectDeporte(event){
+  console.log(event.nombre);
+  this.getEscenarioDeportivos(event.idDeporte)    
+
+  }
+  getEscenarioDeportivos(idDeporte):void{
+    this.espacioService.getEscenariosforid(idDeporte).subscribe(escenarios=> this.escenarios = escenarios);
   }
 
 }
