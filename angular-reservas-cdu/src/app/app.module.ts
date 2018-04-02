@@ -13,6 +13,7 @@ import { EspaciodeportivoService } from './espaciodeportivo.service';
 import { AgregarescenarioComponent } from './agregarescenario/agregarescenario.component';
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
+import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.component';
 
 
 
@@ -23,7 +24,8 @@ import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
     MessagesComponent,
     AgregarescenarioComponent,
     MostrarFotoComponent,
-    HorarioFijoComponent
+    HorarioFijoComponent,
+    EdicionReservaComponent
   ],
   imports: [
     BrowserModule,
