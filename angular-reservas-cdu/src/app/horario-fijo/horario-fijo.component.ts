@@ -1,12 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { Deporte } from '../deporte';
 import { EspaciodeportivoService } from '../espaciodeportivo.service';
-<<<<<<< HEAD
 import { EdicionReservaService } from '../edicion-reserva.service';
-
-=======
 import { EspacioDeportivo} from '../espaciodeportivo';
->>>>>>> 33e3f91705a9e92bbfacba7b474e137db5d4456d
+
 
 @Component({
   selector: 'app-horario-fijo',
@@ -17,20 +14,18 @@ import { EspacioDeportivo} from '../espaciodeportivo';
 export class HorarioFijoComponent implements OnInit {
 
   private deportes:Deporte[];
-<<<<<<< HEAD
+
   private horaI = "7 am";
   private horaF = "9 am";
+  selectedDeporte:Deporte ;
+   selectedEspacio:EspacioDeportivo;
+   private escenarios: EspacioDeportivo[];
+
 
   constructor(private espacioService:EspaciodeportivoService, 
     private edicionReservaService:EdicionReservaService) { }
-=======
-   selectedDeporte:Deporte ;
-   selectedEspacio:EspacioDeportivo;
-   private escenarios: EspacioDeportivo[];
->>>>>>> 33e3f91705a9e92bbfacba7b474e137db5d4456d
+   
 
-  constructor(private espacioService:EspaciodeportivoService) { }
- 
   ngOnInit() {
   	this.getDeportes();
   }
