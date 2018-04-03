@@ -148,6 +148,10 @@ public class EscenarioBean  implements Serializable{
         System.out.println("Descripcion:"+create.getDescripcion());
         System.out.println("Estado:"+create.getEstado());
         create.setDeporteList(deportes);
+        byte[] f1= "dasdsaopdiosap".getBytes();  
+        create.setTipofoto("image/jpeg");
+        create.setFoto(f1);
+       
         ctrl.create(create);
         
        
