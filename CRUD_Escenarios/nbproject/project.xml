@@ -34,7 +34,7 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD}</file>
+                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt;}</file>
                 </library>
                 <library dirs="200">
                     <file>${libs.mail.classpath}</file>
