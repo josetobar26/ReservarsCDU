@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule }     from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarModule } from 'angular-calendar';
 
 import { AppComponent } from './app.component';
 import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deportivos.component';
@@ -14,6 +15,7 @@ import { AgregarescenarioComponent } from './agregarescenario/agregarescenario.c
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 
@@ -25,16 +27,16 @@ import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.compo
     AgregarescenarioComponent,
     MostrarFotoComponent,
     HorarioFijoComponent,
-    EdicionReservaComponent
+    EdicionReservaComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule.forRoot()
-
-
+    NgbModule.forRoot(),
+    CalendarModule.forRoot()
   ],
   providers: [MessageService,EspaciodeportivoService],
   bootstrap: [AppComponent]

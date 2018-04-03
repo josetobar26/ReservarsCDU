@@ -18,7 +18,7 @@ export class HorarioFijoComponent implements OnInit {
   private horaI = "7 am";
   private horaF = "9 am";
   selectedDeporte:Deporte ;
-   selectedEspacio:EspacioDeportivo;
+  selectedEspacio:EspacioDeportivo;
    private escenarios: EspacioDeportivo[];
 
 
