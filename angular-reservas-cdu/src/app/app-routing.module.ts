@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deportivos.component';
-import { AgregarescenarioComponent } from './agregarescenario/agregarescenario.component';
+import { AgregarescenarioComponent } from './escenario/agregarescenario/agregarescenario.component';
 import { HorarioFijoComponent} from './horario-fijo/horario-fijo.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
