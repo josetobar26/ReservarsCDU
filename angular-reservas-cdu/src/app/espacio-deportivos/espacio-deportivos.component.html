@@ -1,10 +1,59 @@
-<h2>Escenarios</h2>
 
 
-<ul class="espacios">
-  <li *ngFor="let espaciodeportivo of espacios">
-  
-      <span class="badge">{{espaciodeportivo.idEspacio}}</span> {{espaciodeportivo.nombre}}
-      
-  </li>
-</ul>
+<div class="container">
+  <h2>Escenarios</h2>
+        
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+     	<tr *ngFor="let espaciodeportivo of espacios">
+     		<td>{{espaciodeportivo.nombre}}</td>
+     		<td>{{espaciodeportivo.descripcion}}</td>
+     		<td>
+     			<a  (click)="showEscenario(espaciodeportivo)"  class="btn btn-primary"  data-toggle="modal" data-target="#showEspacio">
+     				<span class="glyphicon glyphicon-asterisk"></span> Ver
+     			</a>
+
+     			
+     		</td>
+     	
+
+     	</tr>
+  </table>
+</div>
+
+<div id="showEspacio" class="modal fade" role="dialog">
+<div *ngIf="espacioSelected">
+	
+
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Detalles Espacio Deportivo</h4>
+      </div>
+      <div class="modal-body">
+       	<div class="form-group">
+    		<label for="email">Nombre</label>
+    				<input type="email" class="form-control" id="email" readonly value="{{espacioSelected.nombre}}">
+  			</div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+
