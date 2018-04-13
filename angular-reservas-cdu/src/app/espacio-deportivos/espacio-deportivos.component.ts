@@ -10,6 +10,7 @@ import { EspaciodeportivoService } from '../espaciodeportivo.service';
 export class EspacioDeportivosComponent implements OnInit {
 
   private espacios:EspacioDeportivo[];
+  private espacioSelected:EspacioDeportivo;
 
   constructor(private espacioService:EspaciodeportivoService) { }
 
@@ -22,6 +23,11 @@ export class EspacioDeportivosComponent implements OnInit {
     this.espacioService.getEspaciodeportivos()
     .subscribe(espacios => this.espacios = espacios);
     
+  }
+
+  showEscenario(espaciodeportivo):void{
+    console.log(espaciodeportivo.nombre);
+    this.espacioSelected= espaciodeportivo;
   }
 
 }

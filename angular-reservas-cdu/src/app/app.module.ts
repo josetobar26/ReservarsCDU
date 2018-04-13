@@ -11,7 +11,7 @@ import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deporti
 import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
 import { EspaciodeportivoService } from './espaciodeportivo.service';
-import { AgregarescenarioComponent } from './agregarescenario/agregarescenario.component';
+import { AgregarescenarioComponent } from './escenario/agregarescenario/agregarescenario.component';
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.component';
