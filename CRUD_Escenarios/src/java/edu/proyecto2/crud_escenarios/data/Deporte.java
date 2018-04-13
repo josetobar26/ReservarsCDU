@@ -30,9 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "deporte")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Deporte_1.findAll", query = "SELECT d FROM Deporte_1 d")
-    , @NamedQuery(name = "Deporte_1.findByIdDeporte", query = "SELECT d FROM Deporte_1 d WHERE d.idDeporte = :idDeporte")
-    , @NamedQuery(name = "Deporte_1.findByNombre", query = "SELECT d FROM Deporte_1 d WHERE d.nombre = :nombre")})
+    @NamedQuery(name = "Deporte.findAll", query = "SELECT d FROM Deporte d")
+    , @NamedQuery(name = "Deporte.findByIdDeporte", query = "SELECT d FROM Deporte d WHERE d.idDeporte = :idDeporte")
+    , @NamedQuery(name = "Deporte.findByNombre", query = "SELECT d FROM Deporte d WHERE d.nombre = :nombre")})
 public class Deporte implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -108,7 +108,7 @@ public class Deporte implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.proyecto2.crud_escenarios.data.Deporte_1[ idDeporte=" + idDeporte + " ]";
+        return "edu.proyecto2.crud_escenarios.data.Deporte[ idDeporte=" + idDeporte + " ]";
     }
     
 }
