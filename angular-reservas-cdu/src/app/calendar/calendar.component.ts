@@ -15,6 +15,7 @@ import {
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
+import { DemoUtilsModule } from '../../demo-utils/module';
 import { Subject } from 'rxjs/Subject';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const colors: any = {
@@ -40,8 +41,12 @@ const colors: any = {
 })
 export class CalendarComponent implements OnInit {
 
-    @ViewChild('modalContent') modalContent: TemplateRef<any>;
+   @ViewChild('modalContent') modalContent: TemplateRef<any>;
    view: string = 'month';
+   eventActual: CalendarEvent[];
+   eventAct:CalendarEvent;
+
+  
 
   viewDate: Date = new Date();
   actions: CalendarEventAction[] = [
@@ -108,7 +113,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
   }
 
-   eventTimesChanged({
+   eventTimesChanged({	
     event,
     newStart,
     newEnd
@@ -121,6 +126,24 @@ export class CalendarComponent implements OnInit {
    handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+  }
+  addReserva(event){
+
+    this.eventAct={
+      title: 'New event',
+      start: startOfDay(new Date()),
+      end: endOfDay(new Date()),
+       color: colors.red,
+        draggable: true,
+        resizable: {
+        beforeStart: true,
+        afterEnd: true
+        }
+      };
+    
+  	
+  	
+
   }
 
 }

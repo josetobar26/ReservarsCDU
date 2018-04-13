@@ -16,6 +16,7 @@ import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { DemoUtilsModule } from '../demo-utils/module';
 
 
 
@@ -36,7 +37,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    CalendarModule.forRoot()
+    CalendarModule.forRoot(),
+    DemoUtilsModule
   ],
   providers: [MessageService,EspaciodeportivoService],
   bootstrap: [AppComponent]
