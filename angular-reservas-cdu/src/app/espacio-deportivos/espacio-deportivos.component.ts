@@ -29,5 +29,6 @@ export class EspacioDeportivosComponent implements OnInit {
     console.log(espaciodeportivo.nombre);
     this.espacioSelected= espaciodeportivo;
   }
+  
 
 }

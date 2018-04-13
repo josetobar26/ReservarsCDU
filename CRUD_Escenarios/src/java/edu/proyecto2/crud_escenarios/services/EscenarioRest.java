@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package edu.proyecto2.crud_escenarios.services;
 
 import edu.proyecto2.crud_escenarios.bean.DeporteBean;
@@ -45,6 +46,8 @@ public class EscenarioRest {
         return escenariobean.getEspaciosDeportes(id);
        
     }
+    
+    
     
     
 }

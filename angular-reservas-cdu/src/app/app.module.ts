@@ -15,8 +15,7 @@ import { AgregarescenarioComponent } from './escenario/agregarescenario/agregare
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { DemoUtilsModule } from '../demo-utils/module';
+import { MenuNavegacionComponent } from './menu-navegacion/menu-navegacion.component';
 
 
 
@@ -29,6 +28,7 @@ import { DemoUtilsModule } from '../demo-utils/module';
     MostrarFotoComponent,
     HorarioFijoComponent,
     EdicionReservaComponent,
+    MenuNavegacionComponent,
     CalendarComponent
   ],
   imports: [
