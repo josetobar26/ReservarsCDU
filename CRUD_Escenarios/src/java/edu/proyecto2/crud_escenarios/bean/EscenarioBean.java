@@ -113,7 +113,23 @@ public class EscenarioBean  implements Serializable{
         list = ctrl.findEspacioDeportivoEntities();
         return list;
     }
-
+    public List<EspacioDeportivo> getEspaciosDeportes(Integer idDeporte){
+        List<EspacioDeportivo> espacioDeportes=new ArrayList<EspacioDeportivo>();
+        emf=Persistence.createEntityManagerFactory("CRUD_EscenariosPU");
+        EspacioDeportivoJpaController ctrl= new EspacioDeportivoJpaController(emf);
+        list= ctrl.findEspacioDeportivoEntities();
+        
+        for(int i=0;i<list.size();i++){
+            List<Deporte> deportes_1= list.get(i).getDeporteList();
+            for(int j=0;j<deportes_1.size();j++){
+                if(deportes_1.get(j).getIdDeporte().equals(idDeporte)){
+                    espacioDeportes.add(list.get(i));
+                 
+                }
+            }
+        }
+        return espacioDeportes;
+    }
     public void setList(List<EspacioDeportivo> list) {
         this.list = list;
     }
@@ -132,6 +148,10 @@ public class EscenarioBean  implements Serializable{
         System.out.println("Descripcion:"+create.getDescripcion());
         System.out.println("Estado:"+create.getEstado());
         create.setDeporteList(deportes);
+        byte[] f1= "dasdsaopdiosap".getBytes();  
+        create.setTipofoto("image/jpeg");
+        create.setFoto(f1);
+       
         ctrl.create(create);
         
        

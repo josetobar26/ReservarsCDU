@@ -13,6 +13,7 @@ import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -38,5 +39,13 @@ public class EscenarioRest {
         return deportebean.getDeportes();
        
     }
+    @GET
+    @Path("EspacioDeporte/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<EspacioDeportivo> findAllEscenariosDeportes(@PathParam("id") int id){
+        return escenariobean.getEspaciosDeportes(id);
+       
+    }
+    
     
 }
