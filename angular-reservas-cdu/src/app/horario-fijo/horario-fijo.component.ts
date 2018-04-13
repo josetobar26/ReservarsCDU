@@ -3,6 +3,7 @@ import { Deporte } from '../deporte';
 import { EspaciodeportivoService } from '../espaciodeportivo.service';
 import { EdicionReservaService } from '../edicion-reserva.service';
 import { EspacioDeportivo} from '../espaciodeportivo';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({

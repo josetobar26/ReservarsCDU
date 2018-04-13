@@ -15,7 +15,7 @@ import { AgregarescenarioComponent } from './escenario/agregarescenario/agregare
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.component';
-import { CalendarComponent } from './calendar/calendar.component';
+import { MenuNavegacionComponent } from './menu-navegacion/menu-navegacion.component';
 
 
 
@@ -28,6 +28,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     MostrarFotoComponent,
     HorarioFijoComponent,
     EdicionReservaComponent,
+    MenuNavegacionComponent,
     CalendarComponent
   ],
   imports: [
@@ -36,7 +37,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    CalendarModule.forRoot()
+    CalendarModule.forRoot(),
+    DemoUtilsModule
   ],
   providers: [MessageService,EspaciodeportivoService],
   bootstrap: [AppComponent]

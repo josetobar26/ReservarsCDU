@@ -1,0 +1,232 @@
+<div id="wrapper">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <!--<img src="assets/img/unicauca.png" border="0" width="120" height="120"></img>-->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gestion de Reservas CDU</a>
+    </div>
+
+    <!-- Top Menu Items -->
+    <ul class="nav navbar-right top-nav">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-user"></i> Opciones
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="#">
+              <i class="fa fa-fw fa-gear"></i> Mis Reservas</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="#">
+              <i class="fa fa-fw fa-power-off"></i> Cerrar Sesion </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav side-nav">
+
+        <li class="active">
+          <a href="index.html">
+            <i class="fa fa-fw fa-fw"></i> Inicio</a>
+        </li>
+
+        <li>
+          <a href="javascript:;" data-toggle="collapse" data-target="#demo">
+            <i class="fa-user"></i> Gestión de Espacios
+            <i class="fa fa-fw fa-caret-down"></i>
+          </a>
+          <ul id="demo" class="collapse">
+            <li>
+              <a href="#">Listar Espacios Deportivos</a>
+            </li>
+            <li>
+              <a href="#">Agregar Espacio Deportivo</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="javascript:;" data-toggle="collapse" data-target="#demo2">
+            <i class="fa fa-fw fa-gear"></i> Gestión de Elementos
+            <i class="fa fa-fw fa-caret-down"></i>
+          </a>
+          <ul id="demo2" class="collapse">
+            <li>
+              <a href="#">Listar Elementos Deportivos</a>
+            </li>
+            <li>
+              <a href="#">Agregar Elemento Deportivo</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+
+
+
+    <div id="page-wrapper">
+      <div class="container-fluid">
+
+        <!-- Cabecera de la PAGINA -->
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="page-header">
+              <small>Gestion de</small>
+              Elementos Deportivos
+            </h1>
+            <ol class="breadcrumb">
+              <li class="active">
+                <i class="fa fa-edit"></i> Gestion de Elementos Deportivos
+              </li>
+            </ol>
+          </div>
+        </div>
+        <!-- /.row -->
+
+
+        <!--MENSAJE DE BIENVENIDA-->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="alert alert-info alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <i class="fa fa-info-circle"></i>
+              <strong>Pedrito</strong> has ingresado al
+              <a href="http://simca.unicauca.edu.co" class="alert-link">Sistema de Gestion de Reservas CDU</a>
+              , Sea Bienvenid@
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+
+
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <i class="fa fa-bar-chart-o fa-fw"></i>
+                  <!--LOGO DEL AREA-->
+                </h3>
+              </div>
+              <div class="panel-body">
+                Contenido area
+                <!-- CONTENIDO DEL AREA-->
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!--tablero DIVIDIDO EN 3-->
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <i class="fa fa-long-arrow-right fa-fw"></i>Tablero 1</h3>
+              </div>
+              <div class="panel-body">
+                <div class="text-center">
+                  Prueba
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="panel panel-default">
+
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <i class="fa fa-clock-o fa-fw"></i>Tablero 2</h3>
+              </div>
+
+              <div class="panel-body">
+                <div class="list-group">
+
+                  <a href="#" class="list-group-item">
+                    <span class="badge">hace 3 minutos</span>
+                    <i class="fa fa-fw fa-calendar"></i> Reserva
+                  </a>
+
+                </div>
+                <div class="text-right">
+                  <a href="#">Ultima Reserva
+                    <i class="fa fa-arrow-circle-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <i class="fa fa-info-circle fa-fw"></i>Tablero 3</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th class="text-center"># Reserva</th>
+                        <th class="text-center">Tipo Reserva</th>
+                        <th class="text-center">Fecha Reserva</th>
+                        <th class="text-center">Hora Reserva</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1001</td>
+                        <td>Elemento</td>
+                        <td>10/21/2013</td>
+                        <td>3:29 PM</td>
+                      </tr>
+                      <tr>
+                        <td>1002</td>
+                        <td>Escenario</td>
+                        <td>10/21/2013</td>
+                        <td>3:20 PM</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="text-right">
+                  <a href="#">View All Transactions
+                    <i class="fa fa-arrow-circle-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+<!-- /#wrapper -->
