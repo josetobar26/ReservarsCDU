@@ -28,7 +28,7 @@
     <form class="form-inline mt-2 mt-md-0">
       <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
       <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cerrar Sesión</button>-->
-      <button class="btn btn-outline-warning" type="submit">Cerrar Sesión</button>
+      <button class="btn btn-outline-warning" type="button" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</button>
     </form>
   </div>
 </nav>
@@ -37,9 +37,57 @@
 <br>
 <br>
 
+<!-- MENSAJE DE BIENVENIDA -->
 <div class="alert alert-success text-center">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>¡Bienvenido!</strong> Puedes Dirigirte a realizar cualquier acción
 </div>
+
+<!-- CUADRO DE DIALOGO -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="modalCerrarSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Advertencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        ¿Realmente desea salir del Sistema?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Si, Cerrar Sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
 
 <div class="container-fluid">
   <div class="row">
