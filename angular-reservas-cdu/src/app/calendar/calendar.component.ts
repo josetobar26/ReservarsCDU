@@ -45,6 +45,8 @@ export class CalendarComponent implements OnInit {
    view: string = 'month';
    eventActual: CalendarEvent[];
    eventAct:CalendarEvent;
+   option1 = false;
+   option2 = true;
 
   
 
@@ -143,6 +145,23 @@ export class CalendarComponent implements OnInit {
     
   	
   	
+
+  }
+  onFilteroption1(ischecked:boolean){
+    if(ischecked){
+      console.log("option 1 true");
+    }else{
+      console.log("option 1 false");
+
+    }
+  }
+  onFilteroption2(ischecked:boolean){
+    if(ischecked){
+      console.log("option 2 true");
+    }else{
+      console.log("option 2 false");
+
+    }
 
   }
 

@@ -3,24 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Mono/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/services/EscenarioRest.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/C:/Users/Alexis/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/web/index.xhtml</file>
-=======
-<<<<<<< HEAD
             <file>file:/C:/Users/jose/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/bean/EscenarioBean.java</file>
             <file>file:/C:/Users/jose/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/services/EscenarioRest.java</file>
             <file>file:/C:/Users/jose/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/bean/DeporteBean.java</file>
-=======
-            <file>file:/C:/Users/USUARIO/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/test/EscenarioTest/EscenarioTest.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/data/Deporte.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/bean/EscenarioBean.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/test/DeporteTest/DeporteTest.java</file>
->>>>>>> ec86eb46760c4d83cf1931c8301943198af36094
->>>>>>> 215c81df202928b46c45f88c81d925a164ea0592
->>>>>>> c77c04fa468158294a8a45cc5005bccd40bdcaa2
+            <file>file:/C:/Users/jose/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/bean/DeporteConverter.java</file>
+            <file>file:/C:/Users/jose/Documents/GitHub/ReservarsCDU/CRUD_Escenarios/src/java/edu/proyecto2/crud_escenarios/data/EspacioDeportivo.java</file>
         </group>
     </open-files>
 </project-private>

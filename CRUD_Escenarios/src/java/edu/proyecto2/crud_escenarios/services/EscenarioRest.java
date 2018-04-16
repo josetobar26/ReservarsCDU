@@ -11,7 +11,9 @@ import edu.proyecto2.crud_escenarios.bean.EscenarioBean;
 import edu.proyecto2.crud_escenarios.data.Deporte;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -45,6 +47,16 @@ public class EscenarioRest {
     public List<EspacioDeportivo> findAllEscenariosDeportes(@PathParam("id") int id){
         return escenariobean.getEspaciosDeportes(id);
        
+    }
+    
+    
+    @POST
+    @Path("Agregar")
+    @Consumes("application/json")
+    @Produces({MediaType.APPLICATION_JSON})
+    public EspacioDeportivo createEspacioDeportivo(EspacioDeportivo espacio){
+        System.out.println("Espacio:"+espacio.getNombre());
+        return espacio;
     }
     
     
