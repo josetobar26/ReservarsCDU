@@ -1,3 +1,4 @@
+<!-- INICIA LA CABECERA DE LA PAGINA -->
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
   <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +33,7 @@
     </form>
   </div>
 </nav>
+<!-- FIN DE LA CABECERA DE LA PAGINA -->
 
 <br>
 <br>
@@ -42,10 +44,10 @@
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>¡Bienvenido!</strong> Puedes Dirigirte a realizar cualquier acción
 </div>
+<!-- FIN MENSAJE DE BIENVENIDA -->
 
-<!-- CUADRO DE DIALOGO -->
-<!-- Button trigger modal -->
-<!-- Modal -->
+
+<!-- CUADRO DE DIALOGO CONFIRMAR CERRAR SESIÓN -->
 <div class="modal fade" id="modalCerrarSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -65,61 +67,51 @@
     </div>
   </div>
 </div>
-
-<!--
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
--->
+<!-- FIN CUADRO DE DIALOGO -->
 
 
+<!-- MENU LATERAL VERTICAL -->
 <div class="container-fluid">
   <div class="row">
     <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
 
+      <!-- GESTION DE ESPACIOS DEPORTIVOS-->
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Gestión de Espacios Deportivos
+          <a class="nav-link active" href="#" data-toggle="collapse" data-target="#espacios">Gestión de Espacios Deportivos
+            <!-- ICONO -->
+            <i class="fa fa-fw fa-caret-down"></i>
             <span class="sr-only">(current)</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Listar Espacios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Agregar Espacios</a>
+          <ul id="espacios" class="collapse">
+            <a class="nav-link" href="#">Listar Espacios</a>
+            <a class="nav-link" href="#">Agregar Espacio</a>
+          </ul>
         </li>
       </ul>
+      <br>
+      <!-- FIN GESTION DE ESPACIOS DEPORTIVOS-->
 
+      <!-- GESTION DE ESPACIOS DEPORTIVOS-->
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Gestión de Elementos Deportivos
+          <a class="nav-link active" href="#" data-toggle="collapse" data-target="#elementos">Gestión de Elementos Deportivos
+            <!-- ICONO -->
+            <i class="fa fa-fw fa-caret-down"></i>
             <span class="sr-only">(current)</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Listar Elementos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Agregar Elementos</a>
+          <ul id="elementos" class="collapse">
+            <a class="nav-link" href="#">Listar Elementos</a>
+            <a class="nav-link" href="#">Agregar Elemento</a>
+          </ul>
         </li>
       </ul>
+      <br>
+      <!-- FIN GESTION DE ESPACIOS DEPORTIVOS-->
+
     </nav>
+    <!-- CIERRA NAV-->
   </div>
+  <!-- CIERRA DIV -->
 </div>
+<!-- CIERRA DIV SUPERIOR -->
