@@ -18,6 +18,7 @@ export class EspacioDeportivosComponent implements OnInit {
     espacioSelected: EspacioDeportivo;
     deporteSelected: Deporte;
     obj: Deporte;
+    espaciosave: EspacioDeportivo;
 
     deportesSelect: Deporte[];
     deportesAnexados = [];
@@ -122,7 +123,7 @@ export class EspacioDeportivosComponent implements OnInit {
             return false;
         }
         this.espacioSelected.deportelist=this.deportesAnexados;
-        this.espacioService.guardarEspacioDeportivo(this.espacioSelected);
+        this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(newEspacio => this.espaciosave = newEspacio);
         return confirm("¿ DESEA " + this.accion.toUpperCase() + " ESTE ESPACIO DEPORTIVO ?");
         
     }

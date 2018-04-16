@@ -55,7 +55,7 @@ public class EscenarioRest {
     @Consumes("application/json")
     @Produces({MediaType.APPLICATION_JSON})
     public EspacioDeportivo createEspacioDeportivo(EspacioDeportivo espacio){
-        System.out.println("Espacio:"+espacio.getNombre());
+        this.escenariobean.save(espacio);
         return espacio;
     }
     
