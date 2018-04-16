@@ -16,6 +16,10 @@ import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.component';
 import { MenuNavegacionComponent } from './menu-navegacion/menu-navegacion.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { DemoUtilsModule } from '../demo-utils/module';
+
+
 
 
 

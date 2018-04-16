@@ -8,8 +8,9 @@ import { MostrarFotoComponent} from './mostrar-foto/mostrar-foto.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/espaciodeportivos', pathMatch: 'full' },	
+ 	
   { path: 'espaciodeportivos', component: EspacioDeportivosComponent },
+
    { path: 'agregarescenario', component: AgregarescenarioComponent },
    { path: 'horariofijo', component: HorarioFijoComponent },
    { path: 'mostrarfoto', component: MostrarFotoComponent }
