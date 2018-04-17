@@ -5,7 +5,7 @@ export class EspacioDeportivo {
 	public nombre: string,
 	public estado: string,
 	public ubicacion: string,
-	public deportelist: Deporte[],
+	public deporteList: Deporte[],
 	public descripcion?: string
     ) {  }
 }

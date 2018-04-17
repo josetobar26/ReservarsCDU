@@ -1,52 +1,30 @@
 <div class="row text-center">
   <div class="col-md-4">
     <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        mwlCalendarPreviousView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false">
+      <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
         Previous
-      </div>  
-      <div
-        class="btn btn-outline-secondary"
-        mwlCalendarToday
-        [(viewDate)]="viewDate">
+      </div>
+      <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
         Today
       </div>
-      <div
-        class="btn btn-primary"
-        mwlCalendarNextView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false">
+      <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
         Next
       </div>
     </div>
-    
+
   </div>
   <div class="col-md-4">
     <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
   </div>
   <div class="col-md-4">
     <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        (click)="view = 'month'"
-        [class.active]="view === 'month'">
+      <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">
         Month
       </div>
-      <div
-        class="btn btn-primary"
-        (click)="view = 'week'"
-        [class.active]="view === 'week'">
+      <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">
         Week
       </div>
-      <div
-        class="btn btn-primary"
-        (click)="view = 'day'"
-        [class.active]="view === 'day'">
+      <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">
         Day
       </div>
     </div>
@@ -64,36 +42,26 @@
 </div>
 
 <div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="'month'"
-    [viewDate]="viewDate"
-    [events]="events"
-    (dayClicked)="viewDate = $event.day.date; view = 'day'">
+  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" (dayClicked)="viewDate = $event.day.date; view = 'day'">
   </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="'week'"
-    [viewDate]="viewDate"
-    [events]="events"
-    (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
+  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
   </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="'day'"
-    [viewDate]="viewDate"
-    [events]="events">
+  <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events">
   </mwl-calendar-day-view>
 </div>
 
 
-<br><br><br>
+<br>
+<br>
+<br>
 
 <h3>
   Edit events
-  <button
-    class="btn btn-primary pull-left"
-    (click)="addReserva($event)" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+  <button class="btn btn-primary pull-left" (click)="addReserva($event)" type="submit" class="btn btn-primary" data-toggle="modal"
+    data-target="#myModal">
     Add new
   </button>
- 
+
 </h3>
 
 
@@ -108,38 +76,63 @@
       </div>
       <div class="modal-body">
         <div *ngIf="eventAct">
-           
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions" id="inlineRadio1" value="option1">Fija
-                </label>
-              </div>
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions" id="inlineRadio2" value="option2">Diaria
-                </label>
-           </div>
+
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
+                id="inlineRadio1" value="option1">Fija
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
+                id="inlineRadio2" value="option2">Diaria
+            </label>
+          </div>
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+            <div class="col-10">
+              <input class="form-control" type="text" [(ngModel)]="reservaAct.nombre" id="nombre-text-input">
+            </div>
+          </div>
+         
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
+            <div class="col-10">
+              <input class="form-control" type="text" [(ngModel)]="reservaAct.descripcion" id="descripcion-text-input">
+            </div>
+          </div>
 
 
-          <div class="form-group">
-          <mwl-demo-utils-date-time-picker
-          [(ngModel)]="eventAct.start"
-          (ngModelChange)="refresh.next()"
-          placeholder="Not set">
-         </mwl-demo-utils-date-time-picker>
+          <div *ngIf="option1">
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
+              <mwl-demo-utils-date-time-picker [(ngModel)]="eventAct.start" (ngModelChange)="refresh.next()" placeholder="Not set">
+              </mwl-demo-utils-date-time-picker>
 
+
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Final</label>
+              <mwl-demo-utils-date-time-picker [(ngModel)]="eventAct.end" (ngModelChange)="refresh.next()" placeholder="Not set">
+              </mwl-demo-utils-date-time-picker>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="option2">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
+
+          </div>
 
         </div>
+
         <div class="form-group">
-        <mwl-demo-utils-date-time-picker
-          [(ngModel)]="eventAct.end"
-          (ngModelChange)="refresh.next()"
-          placeholder="Not set">
-        </mwl-demo-utils-date-time-picker>
+            <button type="submit" name="btnEnviar" class="btn btn-success" data-dismiss="modal" (click)="guardarReserva($event)">Reservar Escenario</button>
+                
         </div>
-        </div>
-        
-       
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -148,4 +141,3 @@
 
   </div>
 </div>
-

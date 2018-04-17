@@ -149,6 +149,13 @@ public class EscenarioBean  implements Serializable{
         System.out.println("Estado:"+espacio.getUbicacion());
         System.out.println("Descripcion:"+espacio.getDescripcion());
         System.out.println("Estado:"+espacio.getEstado());
+        System.out.println(espacio.getDeporteList().size());
+        if(espacio.getDeporteList()==null){
+            System.out.println("Lista Nula");
+        }else{
+            System.out.println("Lista bien");
+        }
+        
         
         byte[] f1= "dasdsaopdiosap".getBytes();  
         espacio.setTipofoto("image/jpeg");

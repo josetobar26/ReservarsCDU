@@ -37,9 +37,10 @@ export class EspaciodeportivoService {
 //------------------------------------------------------------------------------
 
     guardarEspacioDeportivo (newEspacio:EspacioDeportivo): Observable<EspacioDeportivo> {
-        console.log(newEspacio.nombre);
+        let json = JSON.stringify(newEspacio);
+        console.log(json);
         const url= `${this.espaciosUrl}/Agregar`;
-        return this.http.post<EspacioDeportivo>(url, newEspacio, httpOptions).pipe(
+        return this.http.post<EspacioDeportivo>(url, json, httpOptions).pipe(
             tap((newEspacio: EspacioDeportivo) => this.log(`added hero w/ id=${newEspacio.idEspacio}`)),
             catchError(this.handleError<EspacioDeportivo>('addHero'))
           );
