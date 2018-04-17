@@ -1,8 +1,8 @@
-
 <div class="container">
     <h2>Escenarios</h2>
     <hr>
-    <button type="button" data-toggle="modal" data-target="#modalAgregar" class="btn btn-success"><i class="fa fa-plus"></i> Agregar Escenario</button>
+    <button type="button" data-toggle="modal" data-target="#modalAgregar" class="btn btn-success">
+        <i class="fa fa-plus"></i> Agregar Escenario</button>
     <hr>
     <table id="tblEspaciosdeportivos" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
         <thead>
@@ -14,12 +14,18 @@
         </thead>
         <tbody>
             <tr *ngFor="let espaciodeportivo of espacios">
-            <td>{{espaciodeportivo.nombre}}</td>
-            <td>{{espaciodeportivo.descripcion}}</td>
+                <td>{{espaciodeportivo.nombre}}</td>
+                <td>{{espaciodeportivo.descripcion}}</td>
                 <td>
-                    <a href="" (click)="showEscenario(espaciodeportivo)" data-toggle="modal" data-target="#modalDetalle"><i class="fa fa-eye"></i></a> &nbsp; 
-                    <a href="" (click)="showEscenario(espaciodeportivo)" data-toggle="modal" data-target="#modalEditar"><i class="fa fa-edit"></i></a> &nbsp; 
-                    <a href="" (click)="showEscenario(espaciodeportivo)" data-toggle="modal" data-target="#modalEliminar"><i class="fa fa-times"></i></a>
+                    <a href="" (click)="showEscenario(espaciodeportivo)" data-toggle="modal" data-target="#modalDetalle">
+                        <i class="fa fa-eye"></i>
+                    </a> &nbsp;
+                    <a href="" (click)="showEscenario(espaciodeportivo)" data-toggle="modal" data-target="#modalEditar">
+                        <i class="fa fa-edit"></i>
+                    </a> &nbsp;
+                    <a href="" (click)="showEscenario(espaciodeportivo)" data-toggle="modal" data-target="#modalEliminar">
+                        <i class="fa fa-times"></i>
+                    </a>
                 </td>
             </tr>
     </table>
@@ -30,7 +36,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Espacio Deportivos</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form id="frmEspaciodeportivo" class="form-label-left form-horizontal">
@@ -73,8 +81,10 @@
                     <div class="form-group row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-10">
-                            <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                            <button type="submit" name="btnEnviar" class="btn btn-success" id="btnEnviar"><i class="fa fa-save"></i> Guardar</button>
+                            <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar">
+                                <i class="fa fa-times"></i> Cerrar</button>
+                            <button type="submit" name="btnEnviar" class="btn btn-success" id="btnEnviar">
+                                <i class="fa fa-save"></i> Guardar</button>
                         </div>
                     </div>
                 </form>
@@ -91,55 +101,58 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Espacio Deportivo</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-              <div *ngIf="espacioSelected">
-                <form id="frmEspaciodeportivo" class="form-label-left form-horizontal">
-                    <fieldset>
-                        <legend>Detalle de un Espacio Deportivo</legend>
+                <div *ngIf="espacioSelected">
+                    <form id="frmEspaciodeportivo" class="form-label-left form-horizontal">
+                        <fieldset>
+                            <legend>Detalle de un Espacio Deportivo</legend>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <img src="" alt="IMAGEN ESPACIO DEPORTIVO">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="nombre" name="nombre" value="{{espacioSelected.nombre}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="ubicacion">Ubicacion</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="ubicacion" name="ubicacion" value="{{espacioSelected.ubicacion}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="estado">Estado</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="estado" name="estado" value="{{espacioSelected.estado}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
+                                <div class="col-sm-10">
+                                    <textarea id="descripcion" name="descripcion" class="form-control" readonly>{{espacioSelected.descripcion}}</textarea>
+                                </div>
+                            </div>
+                        </fieldset>
                         <hr>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-2"></div>
                             <div class="col-sm-10">
-                                <img src="" alt="IMAGEN ESPACIO DEPORTIVO">
+                                <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar">
+                                    <i class="fa fa-times"></i> Cerrar</button>
                             </div>
                         </div>
-                        <hr>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="nombre" name="nombre" value="{{espacioSelected.nombre}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="ubicacion">Ubicacion</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="ubicacion" name="ubicacion" value="{{espacioSelected.ubicacion}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="estado">Estado</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="estado" name="estado" value="{{espacioSelected.estado}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
-                            <div class="col-sm-10">
-                                <textarea id="descripcion" name="descripcion" class="form-control" readonly>{{espacioSelected.descripcion}}</textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <hr>
-                    <div class="form-group row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10">
-                            <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <b>UNIVERSIDAD DEL CAUCA &copy; Copyright 2018</b>
@@ -153,58 +166,62 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Espacio Deportivo</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-              <div *ngIf="espacioSelected">
-  
+                <div *ngIf="espacioSelected">
 
-                <form id="frmEspaciodeportivo" class="form-label-left form-horizontal">
-                    <fieldset>
-                        <legend>Actualizacion de un Espacio Deportivo</legend>
+
+                    <form id="frmEspaciodeportivo" class="form-label-left form-horizontal">
+                        <fieldset>
+                            <legend>Actualizacion de un Espacio Deportivo</legend>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <img src="" alt="IMAGEN ESPACIO DEPORTIVO">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="nombre" name="nombre" value="{{espacioSelected.nombre}}" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="ubicacion">Ubicacion</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="ubicacion" name="ubicacion" value="{{espacioSelected.ubicacion}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="estado">Estado</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="estado" name="estado" value="{{espacioSelected.estado}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
+                                <div class="col-sm-10">
+                                    <textarea id="descripcion" name="descripcion" class="form-control">{{espacioSelected.descripcion}}</textarea>
+                                </div>
+                            </div>
+                        </fieldset>
                         <hr>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-2"></div>
                             <div class="col-sm-10">
-                                <img src="" alt="IMAGEN ESPACIO DEPORTIVO">
+                                <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar">
+                                    <i class="fa fa-times"></i> Cerrar</button>
+                                <button type="submit" name="btnEnviar" class="btn btn-success" id="btnEnviar">
+                                    <i class="fa fa-save"></i> Guardar</button>
                             </div>
                         </div>
-                        <hr>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="nombre" name="nombre" value="{{espacioSelected.nombre}}" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="ubicacion">Ubicacion</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="ubicacion" name="ubicacion" value="{{espacioSelected.ubicacion}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="estado">Estado</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="estado" name="estado" value="{{espacioSelected.estado}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
-                            <div class="col-sm-10">
-                                <textarea id="descripcion" name="descripcion" class="form-control">{{espacioSelected.descripcion}}</textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <hr>
-                    <div class="form-group row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10">
-                            <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                            <button type="submit" name="btnEnviar" class="btn btn-success" id="btnEnviar"><i class="fa fa-save"></i> Guardar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <b>UNIVERSIDAD DEL CAUCA &copy; Copyright 2018</b>
@@ -218,58 +235,62 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Espacio Deportivo</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-              <div *ngIf="espacioSelected">
-  
+                <div *ngIf="espacioSelected">
 
-                <form id="frmEspaciodeportivo" class="form-label-left form-horizontal">
-                    <fieldset>
-                        <legend>Eliminacion de un Espacio Deportivo</legend>
+
+                    <form id="frmEspaciodeportivo" class="form-label-left form-horizontal">
+                        <fieldset>
+                            <legend>Eliminacion de un Espacio Deportivo</legend>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <img src="" alt="IMAGEN ESPACIO DEPORTIVO">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="nombre" name="nombre" value="{{espacioSelected.nombre}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="ubicacion">Ubicacion</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="ubicacion" name="ubicacion" value="{{espacioSelected.ubicacion}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="estado">Estado</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="estado" name="estado" value="{{espacioSelected.estado}}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
+                                <div class="col-sm-10">
+                                    <textarea id="descripcion" name="descripcion" class="form-control" readonly>{{espacioSelected.descripcion}}</textarea>
+                                </div>
+                            </div>
+                        </fieldset>
                         <hr>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-2"></div>
                             <div class="col-sm-10">
-                                <img src="" alt="IMAGEN ESPACIO DEPORTIVO">
+                                <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar">
+                                    <i class="fa fa-times"></i> Cerrar</button>
+                                <button type="submit" name="btnEnviar" class="btn btn-success" id="btnEnviar">
+                                    <i class="fa fa-times"></i> Eliminar</button>
                             </div>
                         </div>
-                        <hr>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="nombre" name="nombre" value="{{espacioSelected.nombre}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="ubicacion">Ubicacion</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="ubicacion" name="ubicacion" value="{{espacioSelected.ubicacion}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="estado">Estado</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="estado" name="estado" value="{{espacioSelected.estado}}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
-                            <div class="col-sm-10">
-                                <textarea id="descripcion" name="descripcion" class="form-control" readonly>{{espacioSelected.descripcion}}</textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <hr>
-                    <div class="form-group row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10">
-                            <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                            <button type="submit" name="btnEnviar" class="btn btn-success" id="btnEnviar"><i class="fa fa-times"></i> Eliminar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <b>UNIVERSIDAD DEL CAUCA &copy; Copyright 2018</b>
