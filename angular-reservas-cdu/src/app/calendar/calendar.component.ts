@@ -162,7 +162,7 @@ export class CalendarComponent implements OnInit {
     const inicio=this.eventAct.start;
     const final=this.eventAct.end;
     console.log("inicio1"+inicio.getDate());
-    console.log("inicio1"+final.getDate());
+    console.log("inicio1"+final);
     inicio.setDate(inicio.getDate()+7);
     console.log("inicio"+inicio.getDate());
     if(inicio>=final){
