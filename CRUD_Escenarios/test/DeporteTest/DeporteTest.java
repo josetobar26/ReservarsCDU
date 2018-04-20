@@ -27,7 +27,6 @@ public class DeporteTest {
     public DeporteTest() {
         deportes = new ArrayList<Deporte>();
         deportesTest = new ArrayList<Deporte>();
-        
         llenar();
     }
     
