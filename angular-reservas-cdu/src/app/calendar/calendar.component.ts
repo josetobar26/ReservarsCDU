@@ -9,7 +9,7 @@ import {
   isSameMonth,
   addHours
 } from 'date-fns';
-
+import { ReservaEspacio } from '../reservaespacio';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -18,6 +18,7 @@ import {
 import { DemoUtilsModule } from '../../demo-utils/module';
 import { Subject } from 'rxjs/Subject';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EspacioDeportivo } from '../espaciodeportivo';
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -45,7 +46,10 @@ export class CalendarComponent implements OnInit {
    view: string = 'month';
    eventActual: CalendarEvent[];
    eventAct:CalendarEvent;
-
+   option1 = false;
+   option2 = false;
+   espacio34:EspacioDeportivo;
+   reservaAct:ReservaEspacio=new ReservaEspacio(null,new Date(),new Date(),'','','',null);
   
 
   viewDate: Date = new Date();
@@ -143,6 +147,47 @@ export class CalendarComponent implements OnInit {
     
   	
   	
+
+  }
+  onFilteroption1(ischecked:boolean){
+   this.option1=true;
+   this.option2=false;
+  }
+  onFilteroption2(ischecked:boolean){
+    this.option2=true;
+    this.option1=false;
+
+  }
+  guardarReserva(event){
+    const inicio=this.eventAct.start;
+    const final=this.eventAct.end;
+    console.log("inicio1"+inicio.getDate());
+    console.log("inicio1"+final);
+    inicio.setDate(inicio.getDate()+7);
+    console.log("inicio"+inicio.getDate());
+    if(inicio>=final){
+      while(inicio<=final){
+        //aqui se crea una reserva cada 8 dias
+        this.events.push({
+          title: 'New event',
+          start: inicio,
+          end: inicio,
+          color: colors.red,
+          draggable: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true
+          }
+        });
+        inicio.setDate(inicio.getDate()+7);
+      }
+
+    }else{
+     //la reserva no puede ser fija
+     
+    }
+
+    this.refresh.next;
 
   }
 

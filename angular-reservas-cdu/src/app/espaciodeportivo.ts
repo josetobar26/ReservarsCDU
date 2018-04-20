@@ -1,9 +1,11 @@
-export class EspacioDeportivo{
-	idEspacio:number;
-	nombre:string;
-	estado:string;
-	descripcion:string;
-	ubicacion:string;
-
-	
+import { Deporte } from './deporte';
+export class EspacioDeportivo {
+    constructor(
+	public idEspacio: number,
+	public nombre: string,
+	public estado: string,
+	public ubicacion: string,
+	public deporteList: Deporte[],
+	public descripcion?: string
+    ) {  }
 }

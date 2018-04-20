@@ -72,20 +72,64 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 class="modal-title">Edicion de Reserva</h4>
       </div>
       <div class="modal-body">
         <div *ngIf="eventAct">
-          <div class="form-group">
-            <mwl-demo-utils-date-time-picker [(ngModel)]="eventAct.start" (ngModelChange)="refresh.next()" placeholder="Not set">
-            </mwl-demo-utils-date-time-picker>
+
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" (change)="onFilteroption1($event.target.checked)" name="inlineRadioOptions"
+                id="inlineRadio1" value="option1">Fija
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" (change)="onFilteroption2($event.target.checked)" name="inlineRadioOptions"
+                id="inlineRadio2" value="option2">Diaria
+            </label>
+          </div>
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+            <div class="col-10">
+              <input class="form-control" type="text" [(ngModel)]="reservaAct.nombre" id="nombre-text-input">
+            </div>
+          </div>
+         
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
+            <div class="col-10">
+              <input class="form-control" type="text" [(ngModel)]="reservaAct.descripcion" id="descripcion-text-input">
+            </div>
+          </div>
 
 
+          <div *ngIf="option1">
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
+              <mwl-demo-utils-date-time-picker [(ngModel)]="eventAct.start" (ngModelChange)="refresh.next()" placeholder="Not set">
+              </mwl-demo-utils-date-time-picker>
+
+
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Final</label>
+              <mwl-demo-utils-date-time-picker [(ngModel)]="eventAct.end" (ngModelChange)="refresh.next()" placeholder="Not set">
+              </mwl-demo-utils-date-time-picker>
+            </div>
           </div>
-          <div class="form-group">
-            <mwl-demo-utils-date-time-picker [(ngModel)]="eventAct.end" (ngModelChange)="refresh.next()" placeholder="Not set">
-            </mwl-demo-utils-date-time-picker>
+        </div>
+        <div *ngIf="option2">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Descripcion</label>
+
           </div>
+
+        </div>
+
+        <div class="form-group">
+            <button type="submit" name="btnEnviar" class="btn btn-success" data-dismiss="modal" (click)="guardarReserva($event)">Reservar Escenario</button>
+                
         </div>
 
 
