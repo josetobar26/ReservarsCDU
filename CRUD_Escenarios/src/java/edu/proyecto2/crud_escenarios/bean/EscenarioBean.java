@@ -60,6 +60,7 @@ public class EscenarioBean  implements Serializable{
     }
 
     public void setCreate(EspacioDeportivo create) {
+        System.out.println("Escenario"+create.getIdEspacio());
         this.create = create;
     }
     
@@ -140,21 +141,26 @@ public class EscenarioBean  implements Serializable{
         this.deportes.add(selectDe);
         
     }
-    public void save(){
+    public void save(EspacioDeportivo espacio){
         emf=Persistence.createEntityManagerFactory("CRUD_EscenariosPU");
         EspacioDeportivoJpaController ctrl= new EspacioDeportivoJpaController(emf);
-        System.out.println("nombre:"+create.getNombre());
-        System.out.println("Estado:"+create.getUbicacion());
-        System.out.println("Descripcion:"+create.getDescripcion());
-        System.out.println("Estado:"+create.getEstado());
-        create.setDeporteList(deportes);
-        byte[] f1= "dasdsaopdiosap".getBytes();  
-        create.setTipofoto("image/jpeg");
-        create.setFoto(f1);
-       
-        ctrl.create(create);
+        espacio.setIdEspacio(null);
+        System.out.println("nombre:"+espacio.getNombre());
+        System.out.println("Estado:"+espacio.getUbicacion());
+        System.out.println("Descripcion:"+espacio.getDescripcion());
+        System.out.println("Estado:"+espacio.getEstado());
+        System.out.println(espacio.getDeporteList().size());
+        if(espacio.getDeporteList()==null){
+            System.out.println("Lista Nula");
+        }else{
+            System.out.println("Lista bien");
+        }
         
-       
+        
+        byte[] f1= "dasdsaopdiosap".getBytes();  
+        espacio.setTipofoto("image/jpeg");
+        espacio.setFoto(f1); 
+       ctrl.create(espacio);
     }
     public String confirmar(){
         return "listardeportes";

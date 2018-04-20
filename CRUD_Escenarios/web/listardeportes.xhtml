@@ -65,17 +65,17 @@
                             <h:outputText value="#{obj.descripcion}"/>
                         </p:column>
                         <p:column  headerText="Acción">
-                            <div styleClass="panelGridCenter">
-                                <p:commandButton update=":form" oncomplete="" icon="ui-icon-search" title="View" value="Ver">
-                                    <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
-                                </p:commandButton>
-                                <p:commandButton update=":form" oncomplete="" icon="ui-icon-pencil" title="Edit" value="Editar">
-                                    <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
-                                </p:commandButton>
-                                <p:commandButton update=":form" oncomplete="" icon="ui-icon-close" title="Remove" value="Eliminar">
-                                    <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
-                                </p:commandButton>
-                            </div>
+                                <div styleClass="panelGridCenter">
+                                    <p:commandButton update=":form" oncomplete="" icon="ui-icon-search" title="View" value="Ver">
+                                        <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
+                                    </p:commandButton>
+                                    <p:commandButton update=":form" oncomplete="" icon="ui-icon-pencil" title="Edit" value="Editar">
+                                        <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
+                                    </p:commandButton>
+                                    <p:commandButton update=":form" oncomplete="" icon="ui-icon-close" title="Remove" value="Eliminar">
+                                        <f:setPropertyActionListener value="#{obj}" target="#{dtSelectionView.selectedCar}" />
+                                    </p:commandButton>
+                                </div>
                         </p:column>
                     </p:dataTable>
                 </h:form>       

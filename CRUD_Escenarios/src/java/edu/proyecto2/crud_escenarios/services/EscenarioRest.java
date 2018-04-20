@@ -10,13 +10,27 @@ import edu.proyecto2.crud_escenarios.bean.DeporteBean;
 import edu.proyecto2.crud_escenarios.bean.EscenarioBean;
 import edu.proyecto2.crud_escenarios.data.Deporte;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
+import java.io.BufferedReader;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
+import org.primefaces.json.JSONArray;
+import org.primefaces.json.JSONObject;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 /**
  *
  * @author jose
@@ -29,8 +43,34 @@ public class EscenarioRest {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<EspacioDeportivo> findAllEspaciosdeportivos(){
-        return escenariobean.getList(); 
+    public String findAllEspaciosdeportivos(){
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+         JSONObject enviar=new JSONObject();
+        JSONArray espaciosJson = new JSONArray();
+        for(EspacioDeportivo obj:escenariobean.getList()){
+            JSONObject objson=new JSONObject();
+            objson.put("idEspacio",obj.getIdEspacio());
+            objson.put("nombre", obj.getNombre());
+            objson.put("ubicacion",obj.getUbicacion());
+            objson.put("estado",obj.getEstado());
+            objson.put("descripcion",obj.getDescripcion());
+            objson.put("foto",obj.getFoto());
+            objson.put("tipofoto",obj.getTipofoto());
+            JSONArray deportesJson = new JSONArray();
+            for(Deporte objDeporte:obj.getDeporteList()){
+                JSONObject objDepJson=new JSONObject();
+                objDepJson.put("idDeporte",objDeporte.getIdDeporte());
+                objDepJson.put("nombre", objDeporte.getNombre());
+                deportesJson.put(objDepJson);
+            }
+            objson.put("deporteList", deportesJson);
+            espaciosJson.put(objson);
+        }
+       
+        //enviar.put("espacios", espaciosJson);
+        System.out.println("Resturn"+escenariobean.getList().get(5).getDeporteList().get(0).getNombre());
+        return espaciosJson.toString();
+        //return escenariobean.getList(); 
     }
     @GET
     @Path("deportes")
@@ -45,6 +85,38 @@ public class EscenarioRest {
     public List<EspacioDeportivo> findAllEscenariosDeportes(@PathParam("id") int id){
         return escenariobean.getEspaciosDeportes(id);
        
+    }
+    
+    
+    @POST
+    @Path("Agregar")
+    @Consumes("application/json")
+    @Produces({MediaType.APPLICATION_JSON})
+    public EspacioDeportivo createEspacioDeportivo(InputStream espacio){
+        
+        //this.escenariobean.save(espacio);
+        	
+        
+        StringBuilder crunchyBuilder =new StringBuilder();
+        try{
+            BufferedReader in = new BufferedReader(new InputStreamReader (espacio));
+            String line = null;
+            while((line=in.readLine())!=null){
+                crunchyBuilder.append(line);
+            }
+        }catch(Exception e){
+            
+        }
+        System.out.println("Data Received:"+crunchyBuilder.toString());
+        
+        
+        JsonReader reader = Json.createReader(new StringReader(crunchyBuilder.toString()));
+        JsonObject jsonObject = reader.readObject();
+        
+        EspacioDeportivo espacio2= new EspacioDeportivo();
+        
+        
+        return null;
     }
     
     
