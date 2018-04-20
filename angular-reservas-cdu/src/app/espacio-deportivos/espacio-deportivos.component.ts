@@ -21,7 +21,7 @@ export class EspacioDeportivosComponent implements OnInit {
     espaciosave: EspacioDeportivo;
     espacio:EspacioDeportivo;
     deportesSelect: Deporte[];
-    deportesAnexados :Deporte[];
+    deportesAnexados: Deporte[];
 
     ubicacionesSelect = [
         { value: 'CDU', text: 'CDU' },
@@ -59,10 +59,8 @@ export class EspacioDeportivosComponent implements OnInit {
 
 //------------------------------------------------------------------------------        
 
-    setNuevo() {
-       
-      
-        console.log(this);
+    setNuevo() {      
+//        console.log(this);
         this.espacioSelected = new EspacioDeportivo(0, '', '', '',[], '');
         this.deporteSelected = new Deporte(0, '');
         this.deportesAnexados = [];
@@ -127,11 +125,12 @@ export class EspacioDeportivosComponent implements OnInit {
             alert("DEBE ANEXAR AL MENOS UN DEPORTE");
             return false;
         }
-        this.espacioSelected.deporteList=this.deportesAnexados;
-        console.log(this.deportesAnexados[0].nombre);
-        this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(newEspacio => this.espaciosave = newEspacio);
-        //return confirm("¿ DESEA " + this.accion.toUpperCase() + " ESTE ESPACIO DEPORTIVO ?");
-        
+        if (confirm("¿ DESEA " + this.accion.toUpperCase() + " ESTE ESPACIO DEPORTIVO ?")) {
+            this.espacioSelected.deporteList=this.deportesAnexados;
+            console.log(this.deportesAnexados[0].nombre);
+            this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(newEspacio => { this.espaciosave = newEspacio; });
+            console.log('save: ' + this.espaciosave);
+        }      
     }
 
 //------------------------------------------------------------------------------        
