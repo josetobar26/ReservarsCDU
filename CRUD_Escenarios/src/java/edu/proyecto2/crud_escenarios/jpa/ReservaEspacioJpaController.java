@@ -11,12 +11,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
-import edu.proyecto2.crud_escenarios.data.Usuario;
-import edu.proyecto2.crud_escenarios.data.Horario;
 import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
-import edu.proyecto2.crud_escenarios.jpa.exceptions.IllegalOrphanException;
 import edu.proyecto2.crud_escenarios.jpa.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -46,33 +42,10 @@ public class ReservaEspacioJpaController implements Serializable {
                 idEspacio = em.getReference(idEspacio.getClass(), idEspacio.getIdEspacio());
                 reservaEspacio.setIdEspacio(idEspacio);
             }
-            Usuario login = reservaEspacio.getLogin();
-            if (login != null) {
-                login = em.getReference(login.getClass(), login.getIdUsuario());
-                reservaEspacio.setLogin(login);
-            }
-            Horario horario = reservaEspacio.getHorario();
-            if (horario != null) {
-                horario = em.getReference(horario.getClass(), horario.getIdHorario());
-                reservaEspacio.setHorario(horario);
-            }
             em.persist(reservaEspacio);
             if (idEspacio != null) {
                 idEspacio.getReservaEspacioList().add(reservaEspacio);
                 idEspacio = em.merge(idEspacio);
-            }
-            if (login != null) {
-                login.getReservaEspacioList().add(reservaEspacio);
-                login = em.merge(login);
-            }
-            if (horario != null) {
-                ReservaEspacio oldIdReservaOfHorario = horario.getIdReserva();
-                if (oldIdReservaOfHorario != null) {
-                    oldIdReservaOfHorario.setHorario(null);
-                    oldIdReservaOfHorario = em.merge(oldIdReservaOfHorario);
-                }
-                horario.setIdReserva(reservaEspacio);
-                horario = em.merge(horario);
             }
             em.getTransaction().commit();
         } finally {
@@ -82,7 +55,7 @@ public class ReservaEspacioJpaController implements Serializable {
         }
     }
 
-    public void edit(ReservaEspacio reservaEspacio) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(ReservaEspacio reservaEspacio) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -90,31 +63,9 @@ public class ReservaEspacioJpaController implements Serializable {
             ReservaEspacio persistentReservaEspacio = em.find(ReservaEspacio.class, reservaEspacio.getIdReserva());
             EspacioDeportivo idEspacioOld = persistentReservaEspacio.getIdEspacio();
             EspacioDeportivo idEspacioNew = reservaEspacio.getIdEspacio();
-            Usuario loginOld = persistentReservaEspacio.getLogin();
-            Usuario loginNew = reservaEspacio.getLogin();
-            Horario horarioOld = persistentReservaEspacio.getHorario();
-            Horario horarioNew = reservaEspacio.getHorario();
-            List<String> illegalOrphanMessages = null;
-            if (horarioOld != null && !horarioOld.equals(horarioNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("You must retain Horario " + horarioOld + " since its idReserva field is not nullable.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             if (idEspacioNew != null) {
                 idEspacioNew = em.getReference(idEspacioNew.getClass(), idEspacioNew.getIdEspacio());
                 reservaEspacio.setIdEspacio(idEspacioNew);
-            }
-            if (loginNew != null) {
-                loginNew = em.getReference(loginNew.getClass(), loginNew.getIdUsuario());
-                reservaEspacio.setLogin(loginNew);
-            }
-            if (horarioNew != null) {
-                horarioNew = em.getReference(horarioNew.getClass(), horarioNew.getIdHorario());
-                reservaEspacio.setHorario(horarioNew);
             }
             reservaEspacio = em.merge(reservaEspacio);
             if (idEspacioOld != null && !idEspacioOld.equals(idEspacioNew)) {
@@ -124,23 +75,6 @@ public class ReservaEspacioJpaController implements Serializable {
             if (idEspacioNew != null && !idEspacioNew.equals(idEspacioOld)) {
                 idEspacioNew.getReservaEspacioList().add(reservaEspacio);
                 idEspacioNew = em.merge(idEspacioNew);
-            }
-            if (loginOld != null && !loginOld.equals(loginNew)) {
-                loginOld.getReservaEspacioList().remove(reservaEspacio);
-                loginOld = em.merge(loginOld);
-            }
-            if (loginNew != null && !loginNew.equals(loginOld)) {
-                loginNew.getReservaEspacioList().add(reservaEspacio);
-                loginNew = em.merge(loginNew);
-            }
-            if (horarioNew != null && !horarioNew.equals(horarioOld)) {
-                ReservaEspacio oldIdReservaOfHorario = horarioNew.getIdReserva();
-                if (oldIdReservaOfHorario != null) {
-                    oldIdReservaOfHorario.setHorario(null);
-                    oldIdReservaOfHorario = em.merge(oldIdReservaOfHorario);
-                }
-                horarioNew.setIdReserva(reservaEspacio);
-                horarioNew = em.merge(horarioNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -159,7 +93,7 @@ public class ReservaEspacioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -171,26 +105,10 @@ public class ReservaEspacioJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The reservaEspacio with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            Horario horarioOrphanCheck = reservaEspacio.getHorario();
-            if (horarioOrphanCheck != null) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This ReservaEspacio (" + reservaEspacio + ") cannot be destroyed since the Horario " + horarioOrphanCheck + " in its horario field has a non-nullable idReserva field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             EspacioDeportivo idEspacio = reservaEspacio.getIdEspacio();
             if (idEspacio != null) {
                 idEspacio.getReservaEspacioList().remove(reservaEspacio);
                 idEspacio = em.merge(idEspacio);
-            }
-            Usuario login = reservaEspacio.getLogin();
-            if (login != null) {
-                login.getReservaEspacioList().remove(reservaEspacio);
-                login = em.merge(login);
             }
             em.remove(reservaEspacio);
             em.getTransaction().commit();

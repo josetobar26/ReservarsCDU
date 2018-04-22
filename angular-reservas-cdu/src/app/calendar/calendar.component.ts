@@ -160,18 +160,34 @@ export class CalendarComponent implements OnInit {
   }
   guardarReserva(event){
     const inicio=this.eventAct.start;
+    
     const final=this.eventAct.end;
-    console.log("inicio1"+inicio.getDate());
-    console.log("inicio1"+final);
+    console.log("inicio1"+inicio);
+    console.log("inicio2:"+final);
     inicio.setDate(inicio.getDate()+7);
-    console.log("inicio"+inicio.getDate());
-    if(inicio>=final){
+    console.log("inicio"+inicio);
+    if(final>=inicio){
+      console.log("Entro en el if");
       while(inicio<=final){
+        console.log("Entro en el bucle");
         //aqui se crea una reserva cada 8 dias
+        let inicioCopia=new Date();
+        let inicioCopia2=new Date();
+        //final del evento
+        inicioCopia.setDate(inicio.getDate());
+        inicioCopia.setMonth(inicio.getMonth());
+        inicioCopia.setHours(final.getHours(),final.getMinutes(),final.getSeconds());
+        //inicio del evento
+        inicioCopia2.setDate(inicio.getDate());
+        inicioCopia2.setMonth(inicio.getMonth());
+        inicioCopia2.setHours(inicio.getHours(),inicio.getMinutes(),inicio.getSeconds());
+        console.log("Inicio de hora"+inicio);
+        console.log("Nueva hora"+inicioCopia);
+        console.log("Inicio del evento"+inicioCopia2);
         this.events.push({
           title: 'New event',
-          start: inicio,
-          end: inicio,
+          start: inicioCopia2,
+          end: inicioCopia,
           color: colors.red,
           draggable: true,
           resizable: {
@@ -187,7 +203,7 @@ export class CalendarComponent implements OnInit {
      
     }
 
-    this.refresh.next;
+    this.refresh.next();
 
   }
 

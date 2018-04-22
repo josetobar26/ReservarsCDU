@@ -6,6 +6,7 @@
 
 package edu.proyecto2.crud_escenarios.services;
 
+import com.google.gson.Gson;
 import edu.proyecto2.crud_escenarios.bean.DeporteBean;
 import edu.proyecto2.crud_escenarios.bean.EscenarioBean;
 import edu.proyecto2.crud_escenarios.data.Deporte;
@@ -30,7 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
+import javax.json.JsonReader;   
 /**
  *
  * @author jose
@@ -83,40 +84,22 @@ public class EscenarioRest {
     @Path("EspacioDeporte/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public List<EspacioDeportivo> findAllEscenariosDeportes(@PathParam("id") int id){
-        return escenariobean.getEspaciosDeportes(id);
+        return escenariobean.getEspaciosDeportes(id);   
        
     }
     
     
     @POST
-    @Path("Agregar")
-    @Consumes("application/json")
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public EspacioDeportivo createEspacioDeportivo(InputStream espacio){
-        
-        //this.escenariobean.save(espacio);
-        	
-        
-        StringBuilder crunchyBuilder =new StringBuilder();
-        try{
-            BufferedReader in = new BufferedReader(new InputStreamReader (espacio));
-            String line = null;
-            while((line=in.readLine())!=null){
-                crunchyBuilder.append(line);
-            }
-        }catch(Exception e){
-            
-        }
-        System.out.println("Data Received:"+crunchyBuilder.toString());
-        
-        
-        JsonReader reader = Json.createReader(new StringReader(crunchyBuilder.toString()));
-        JsonObject jsonObject = reader.readObject();
-        
-        EspacioDeportivo espacio2= new EspacioDeportivo();
-        
-        
-        return null;
+    public String createEspacioDeportivo(String espacioJson) {
+        System.out.println("-- " + espacioJson);
+        final Gson gson = new Gson();
+        final EspacioDeportivo espacioObj = gson.fromJson(espacioJson, EspacioDeportivo.class);
+        System.out.println(": " + espacioObj.getNombre());
+        System.out.println(": " + espacioObj.getDeporteList());
+        this.escenariobean.save(espacioObj);
+        return espacioJson;
     }
     
     

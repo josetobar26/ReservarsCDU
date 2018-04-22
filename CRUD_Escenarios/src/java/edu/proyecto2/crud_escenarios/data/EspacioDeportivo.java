@@ -44,6 +44,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "EspacioDeportivo.findByTipofoto", query = "SELECT e FROM EspacioDeportivo e WHERE e.tipofoto = :tipofoto")})
 public class EspacioDeportivo implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Column(name = "foto")
+    private byte[] foto;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,11 +76,6 @@ public class EspacioDeportivo implements Serializable {
     @Size(min = 1, max = 13)
     @Column(name = "estado")
     private String estado;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Column(name = "foto")
-    private byte[] foto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 11)
@@ -145,13 +146,6 @@ public class EspacioDeportivo implements Serializable {
         this.estado = estado;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 
     public String getTipofoto() {
         return tipofoto;
@@ -202,6 +196,14 @@ public class EspacioDeportivo implements Serializable {
     @Override
     public String toString() {
         return "edu.proyecto2.crud_escenarios.data.EspacioDeportivo[ idEspacio=" + idEspacio + " ]";
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
     
 }

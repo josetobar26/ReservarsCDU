@@ -8,7 +8,6 @@ package edu.proyecto2.crud_escenarios.data;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,11 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ReservaEspacio.findAll", query = "SELECT r FROM ReservaEspacio r")
     , @NamedQuery(name = "ReservaEspacio.findByIdReserva", query = "SELECT r FROM ReservaEspacio r WHERE r.idReserva = :idReserva")
+    , @NamedQuery(name = "ReservaEspacio.findByLogin", query = "SELECT r FROM ReservaEspacio r WHERE r.login = :login")
+    , @NamedQuery(name = "ReservaEspacio.findByNombre", query = "SELECT r FROM ReservaEspacio r WHERE r.nombre = :nombre")
     , @NamedQuery(name = "ReservaEspacio.findByFechaini", query = "SELECT r FROM ReservaEspacio r WHERE r.fechaini = :fechaini")
     , @NamedQuery(name = "ReservaEspacio.findByFechafin", query = "SELECT r FROM ReservaEspacio r WHERE r.fechafin = :fechafin")
     , @NamedQuery(name = "ReservaEspacio.findByTipo", query = "SELECT r FROM ReservaEspacio r WHERE r.tipo = :tipo")
     , @NamedQuery(name = "ReservaEspacio.findByEsfija", query = "SELECT r FROM ReservaEspacio r WHERE r.esfija = :esfija")
-    , @NamedQuery(name = "ReservaEspacio.findByPrioridad", query = "SELECT r FROM ReservaEspacio r WHERE r.prioridad = :prioridad")
     , @NamedQuery(name = "ReservaEspacio.findByDescripcion", query = "SELECT r FROM ReservaEspacio r WHERE r.descripcion = :descripcion")
     , @NamedQuery(name = "ReservaEspacio.findByRegistradopor", query = "SELECT r FROM ReservaEspacio r WHERE r.registradopor = :registradopor")
     , @NamedQuery(name = "ReservaEspacio.findByModificadopor", query = "SELECT r FROM ReservaEspacio r WHERE r.modificadopor = :modificadopor")
@@ -56,13 +55,23 @@ public class ReservaEspacio implements Serializable {
     private Integer idReserva;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "login")
+    private String login;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "nombre")
+    private String nombre;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "fechaini")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaini;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechafin")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechafin;
     @Basic(optional = false)
     @NotNull
@@ -73,10 +82,6 @@ public class ReservaEspacio implements Serializable {
     @NotNull
     @Column(name = "esfija")
     private boolean esfija;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "prioridad")
-    private short prioridad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
@@ -105,11 +110,6 @@ public class ReservaEspacio implements Serializable {
     @JoinColumn(name = "idEspacio", referencedColumnName = "idEspacio")
     @ManyToOne(optional = false)
     private EspacioDeportivo idEspacio;
-    @JoinColumn(name = "login", referencedColumnName = "login")
-    @ManyToOne(optional = false)
-    private Usuario login;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idReserva")
-    private Horario horario;
 
     public ReservaEspacio() {
     }
@@ -118,13 +118,14 @@ public class ReservaEspacio implements Serializable {
         this.idReserva = idReserva;
     }
 
-    public ReservaEspacio(Integer idReserva, Date fechaini, Date fechafin, String tipo, boolean esfija, short prioridad, String descripcion, String registradopor, String modificadopor, Date fechahorareg, Date fechahoramod) {
+    public ReservaEspacio(Integer idReserva, String login, String nombre, Date fechaini, Date fechafin, String tipo, boolean esfija, String descripcion, String registradopor, String modificadopor, Date fechahorareg, Date fechahoramod) {
         this.idReserva = idReserva;
+        this.login = login;
+        this.nombre = nombre;
         this.fechaini = fechaini;
         this.fechafin = fechafin;
         this.tipo = tipo;
         this.esfija = esfija;
-        this.prioridad = prioridad;
         this.descripcion = descripcion;
         this.registradopor = registradopor;
         this.modificadopor = modificadopor;
@@ -138,6 +139,22 @@ public class ReservaEspacio implements Serializable {
 
     public void setIdReserva(Integer idReserva) {
         this.idReserva = idReserva;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Date getFechaini() {
@@ -170,14 +187,6 @@ public class ReservaEspacio implements Serializable {
 
     public void setEsfija(boolean esfija) {
         this.esfija = esfija;
-    }
-
-    public short getPrioridad() {
-        return prioridad;
-    }
-
-    public void setPrioridad(short prioridad) {
-        this.prioridad = prioridad;
     }
 
     public String getDescripcion() {
@@ -226,22 +235,6 @@ public class ReservaEspacio implements Serializable {
 
     public void setIdEspacio(EspacioDeportivo idEspacio) {
         this.idEspacio = idEspacio;
-    }
-
-    public Usuario getLogin() {
-        return login;
-    }
-
-    public void setLogin(Usuario login) {
-        this.login = login;
-    }
-
-    public Horario getHorario() {
-        return horario;
-    }
-
-    public void setHorario(Horario horario) {
-        this.horario = horario;
     }
 
     @Override
