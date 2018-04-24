@@ -102,8 +102,15 @@
               <input class="form-control" type="text" [(ngModel)]="reservaAct.descripcion" id="descripcion-text-input">
             </div>
           </div>
-
-
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Tipo</label>
+            <select id="tipo" name="tipo" [(ngModel)]="reservaAct.tipo" class="form-control"  #tipo="ngModel">
+              <option value="">Seleccione...</option>
+              <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
+          </select>
+          </div>
+          
+          
           <div *ngIf="option1">
             <div class="form-group row">
                 <label for="example-text-input" class="col-2 col-form-label">Inicio</label>
