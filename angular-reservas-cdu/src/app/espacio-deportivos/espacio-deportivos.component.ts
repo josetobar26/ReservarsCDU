@@ -21,7 +21,7 @@ export class EspacioDeportivosComponent implements OnInit {
     espaciosave: EspacioDeportivo;
     espacio:EspacioDeportivo;
     deportesSelect: Deporte[];
-    deportesAnexados :Deporte[];
+    deportesAnexados: Deporte[];
 
     ubicacionesSelect = [
         { value: 'CDU', text: 'CDU' },
@@ -44,7 +44,7 @@ export class EspacioDeportivosComponent implements OnInit {
 //------------------------------------------------------------------------------
 
     ngOnInit() {
-        this.espacioSelected = new EspacioDeportivo(0, '', '', '', [],'');
+        this.espacioSelected = new EspacioDeportivo(0, '', '', '', [],[],'');
         this.deporteSelected = new Deporte(0, '');
         this.getEspaciosDeportivos();
         this.deportesAnexados=[];
@@ -59,11 +59,9 @@ export class EspacioDeportivosComponent implements OnInit {
 
 //------------------------------------------------------------------------------        
 
-    setNuevo() {
-       
-      
-        console.log(this);
-        this.espacioSelected = new EspacioDeportivo(0, '', '', '',[], '');
+    setNuevo() {      
+//        console.log(this);
+        this.espacioSelected = new EspacioDeportivo(0, '', '', '',[],[], '');
         this.deporteSelected = new Deporte(0, '');
         this.deportesAnexados = [];
         this.espacioService.getDeportes().subscribe(deportes => this.deportesSelect = deportes);
@@ -75,9 +73,10 @@ export class EspacioDeportivosComponent implements OnInit {
 //------------------------------------------------------------------------------
 
     verEspacioDeportivo(espaciodeportivo, accion) {
-        this.espacioSelected = new EspacioDeportivo(espaciodeportivo.idEspacio, espaciodeportivo.nombre, espaciodeportivo.estado, espaciodeportivo.ubicacion, espaciodeportivo.descripcion);
+        this.espacioSelected = new EspacioDeportivo(espaciodeportivo.idEspacio, espaciodeportivo.nombre, espaciodeportivo.estado, espaciodeportivo.ubicacion,espaciodeportivo.deporteList,[], espaciodeportivo.descripcion);
+        this.espacioService.getDeportes().subscribe(deportes => this.deportesSelect = deportes);
         this.deporteSelected = new Deporte(0, '');
-        this.deportesAnexados = [];
+        this.deportesAnexados = espaciodeportivo.deporteList;
         this.accion = accion;
         switch(accion) {
             case 'Actualizar':
@@ -122,18 +121,46 @@ export class EspacioDeportivosComponent implements OnInit {
     
 //------------------------------------------------------------------------------        
     
-    enviarFormulario(): boolean {
-        if (this.deportesAnexados.length === 0) {
-            alert("DEBE ANEXAR AL MENOS UN DEPORTE");
-            return false;
-        }
-        this.espacioSelected.deporteList=this.deportesAnexados;
-        console.log(this.deportesAnexados[0].nombre);
-        this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(newEspacio => this.espaciosave = newEspacio);
-        //return confirm("¿ DESEA " + this.accion.toUpperCase() + " ESTE ESPACIO DEPORTIVO ?");
-        
+enviarFormulario(): boolean {
+    if (this.accion !== 'Eliminar' && this.deportesAnexados.length === 0) {
+        alert("DEBE ANEXAR AL MENOS UN DEPORTE");
+        return false;
     }
-
+    if (confirm("¿ DESEA " + this.accion.toUpperCase() + " ESTE ESPACIO DEPORTIVO ?")) {
+        switch (this.accion) {
+            case "Registrar":
+                console.log("REGISTRANDO...");
+                this.espacioSelected.deporteList = this.deportesAnexados;
+                this.espacioService.guardarEspacioDeportivo(this.espacioSelected).subscribe(espacio => { this.espacios.push(espacio); });
+                break;
+            case "Actualizar":
+                console.log("ACTUALIZANDO...");
+                this.espacioSelected.deporteList = this.deportesAnexados;
+                this.espacioService.actualizarEspacioDeportivo(this.espacioSelected).subscribe(ok => {
+                    if (ok) {
+                        window.location.reload();
+                    } else {
+                        alert("SE HA PRESENTADO UN ERROR, POR FAVOR INTENTE NUEVAMENTE.");
+                    }
+                });
+                break;
+            case "Eliminar":
+                console.log("ELIMINANDO...");
+                this.espacios = this.espacios.filter(espacio => espacio !== this.espacioSelected);
+                this.espacioService.eliminarEspacioDeportivo(this.espacioSelected.idEspacio).subscribe(ok => {
+                    if (ok) {
+                        window.location.reload();
+                    } else {
+                        alert("SE HA PRESENTADO UN ERROR, POR FAVOR INTENTE NUEVAMENTE.");
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+//            console.log('save: ' + newEspacio);
+    }      
+}
 //------------------------------------------------------------------------------        
 
     deportesIguales(deporte1, deporte2): boolean {

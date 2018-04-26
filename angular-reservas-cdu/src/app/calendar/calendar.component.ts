@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,TemplateRef,ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild,TemplateRef,ChangeDetectionStrategy,Input } from '@angular/core';
 import {
   startOfDay,
   endOfDay,
@@ -19,6 +19,7 @@ import { DemoUtilsModule } from '../../demo-utils/module';
 import { Subject } from 'rxjs/Subject';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EspacioDeportivo } from '../espaciodeportivo';
+import { EspaciodeportivoService } from '../espaciodeportivo.service';
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -49,9 +50,16 @@ export class CalendarComponent implements OnInit {
    option1 = false;
    option2 = false;
    espacio34:EspacioDeportivo;
-   reservaAct:ReservaEspacio=new ReservaEspacio(null,new Date(),new Date(),'','','',null);
-  
-
+   @Input() selectEspacio: EspacioDeportivo;
+   reservaSave:ReservaEspacio;
+   reservaAct:ReservaEspacio=new ReservaEspacio(0,new Date(),new Date(),'','','',false,null);
+   reservasActuales:ReservaEspacio[];
+   tipoSelect = [
+    { value: 'Academico', text: 'Academico' },
+    { value: 'Normal', text: 'Normal' },
+    { value: 'Evento', text: 'Evento' },
+    { value: 'Seleccionados', text: 'Seleccionados' },
+  ];
   viewDate: Date = new Date();
   actions: CalendarEventAction[] = [
     {
@@ -78,45 +86,59 @@ export class CalendarComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
+  events: CalendarEvent[] = [];
 
-  constructor(private modal: NgbModal) { }
-
-  ngOnInit() {
+  constructor(private modal: NgbModal, private espacioService:EspaciodeportivoService) { 
+  
   }
 
+  ngOnInit() {
+    
+    this.getReservasEspacio();
+  
+    
+    
+  }
+  getReservasEspacio(){
+
+    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio).subscribe(reservas =>{
+      this.reservasActuales = reservas;
+    
+      this.cargarReservas();
+    } );
+    
+  }
+  cargarReservas(){
+    console.log("lengt"+this.reservasActuales.length);
+    for(let i=0;i<this.reservasActuales.length;i++){
+      //let fechaIni= this.setFecha(this.reservasActuales[i].fechaini);
+      //let fechafin = this.setFecha(this.reservasActuales[i].fechafin);
+      console.log(this.reservasActuales[i].nombre);
+     // console.log("fecha ini"+fechaIni);
+      console.log("date"+new Date(this.reservasActuales[i].fechaini));
+      this.events.push({
+        title: this.reservasActuales[i].nombre.toString(),
+        start: new Date(this.reservasActuales[i].fechaini),
+        end: new Date(this.reservasActuales[i].fechafin),
+        color: colors.red,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        }
+      });
+
+    }
+    this.refresh.next();
+  }
+
+  setFecha(fecha : Date):Date{
+    let fecha2=new Date();
+    fecha2.setMonth(fecha.getMonth());
+    fecha2.setHours(fecha.getHours(),fecha.getMinutes(),fecha.getSeconds());
+    return fecha2;
+  
+  }
    eventTimesChanged({	
     event,
     newStart,
@@ -134,9 +156,9 @@ export class CalendarComponent implements OnInit {
   addReserva(event){
 
     this.eventAct={
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
+      title: this.reservaAct.nombre.toString(),
+      start: this.viewDate,
+      end: this.viewDate,
        color: colors.red,
         draggable: true,
         resizable: {
@@ -145,8 +167,7 @@ export class CalendarComponent implements OnInit {
         }
       };
     
-  	
-  	
+      console.log("reserva:"+this.reservasActuales.length);
 
   }
   onFilteroption1(ischecked:boolean){
@@ -159,19 +180,47 @@ export class CalendarComponent implements OnInit {
 
   }
   guardarReserva(event){
+    console.log("espacio seleccionado"+this.selectEspacio.nombre);
     const inicio=this.eventAct.start;
     const final=this.eventAct.end;
-    console.log("inicio1"+inicio.getDate());
-    console.log("inicio1"+final);
-    inicio.setDate(inicio.getDate()+7);
-    console.log("inicio"+inicio.getDate());
-    if(inicio>=final){
+    let reservaActual=this.reservaAct;
+    reservaActual.idEspacio=this.selectEspacio;
+    reservaActual.esfija=this.option1;
+    
+    console.log("inicio1"+inicio);
+    console.log("inicio2:"+final);
+    //inicio.setDate(inicio.getDate()+7);
+    console.log("inicio"+inicio);
+    if(final>=inicio){
+      console.log("Entro en el if");
       while(inicio<=final){
+        console.log("Entro en el bucle");
         //aqui se crea una reserva cada 8 dias
+        let inicioCopia=new Date();
+        let inicioCopia2=new Date();
+        //final del evento
+        inicioCopia.setDate(inicio.getDate());
+        inicioCopia.setMonth(inicio.getMonth());
+        inicioCopia.setHours(final.getHours(),final.getMinutes(),final.getSeconds());
+        //inicio del evento
+        inicioCopia2.setDate(inicio.getDate());
+        inicioCopia2.setMonth(inicio.getMonth());
+        inicioCopia2.setHours(inicio.getHours(),inicio.getMinutes(),inicio.getSeconds());
+        console.log("Inicio de hora"+inicio);
+        console.log("Final de Hora"+inicioCopia);
+        console.log("Inicio del evento"+inicioCopia2);
+        //aqui se reserva 
+        reservaActual.fechaini=inicioCopia2;
+        reservaActual.fechafin=inicioCopia;
+      
+        
+        this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual=>{this.reservaSave=reservaActual});
+        
+
         this.events.push({
-          title: 'New event',
-          start: inicio,
-          end: inicio,
+          title: this.reservaAct.nombre.toString(),
+          start: inicioCopia2,
+          end: inicioCopia,
           color: colors.red,
           draggable: true,
           resizable: {
@@ -187,7 +236,7 @@ export class CalendarComponent implements OnInit {
      
     }
 
-    this.refresh.next;
+    this.refresh.next();
 
   }
 

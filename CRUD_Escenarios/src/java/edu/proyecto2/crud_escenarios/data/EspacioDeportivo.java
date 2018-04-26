@@ -44,6 +44,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "EspacioDeportivo.findByTipofoto", query = "SELECT e FROM EspacioDeportivo e WHERE e.tipofoto = :tipofoto")})
 public class EspacioDeportivo implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Column(name = "foto")
+    private byte[] foto;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,11 +78,6 @@ public class EspacioDeportivo implements Serializable {
     private String estado;
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Column(name = "foto")
-    private byte[] foto;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 11)
     @Column(name = "tipofoto")
     private String tipofoto;
@@ -95,7 +96,7 @@ public class EspacioDeportivo implements Serializable {
         this.idEspacio = idEspacio;
     }
 
-    public EspacioDeportivo(Integer idEspacio, String nombre, String ubicacion, String descripcion, String estado, byte[] foto, String tipofoto) {
+     public EspacioDeportivo(Integer idEspacio, String nombre, String ubicacion, String descripcion, String estado, byte[] foto, String tipofoto, List<Deporte> deporteList) {
         this.idEspacio = idEspacio;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -103,6 +104,7 @@ public class EspacioDeportivo implements Serializable {
         this.estado = estado;
         this.foto = foto;
         this.tipofoto = tipofoto;
+        this.deporteList = deporteList;
     }
 
     public Integer getIdEspacio() {
@@ -145,13 +147,6 @@ public class EspacioDeportivo implements Serializable {
         this.estado = estado;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 
     public String getTipofoto() {
         return tipofoto;
@@ -202,6 +197,14 @@ public class EspacioDeportivo implements Serializable {
     @Override
     public String toString() {
         return "edu.proyecto2.crud_escenarios.data.EspacioDeportivo[ idEspacio=" + idEspacio + " ]";
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
     
 }
