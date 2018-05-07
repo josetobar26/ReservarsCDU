@@ -1,3 +1,4 @@
+import { registerLocaleData } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -5,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule }     from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule } from 'angular-calendar';
+import localeEs from '@angular/common/locales/es';
 
 import { AppComponent } from './app.component';
 import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deportivos.component';
@@ -21,7 +23,7 @@ import { DemoUtilsModule } from '../demo-utils/module';
 
 
 
-
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [

@@ -13,7 +13,9 @@ import { ReservaEspacio } from '../reservaespacio';
 import {
   CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent
+  CalendarEventTimesChangedEvent,
+  CalendarDateFormatter,
+  DAYS_OF_WEEK
 } from 'angular-calendar';
 import { DemoUtilsModule } from '../../demo-utils/module';
 import { Subject } from 'rxjs/Subject';
@@ -49,6 +51,7 @@ export class CalendarComponent implements OnInit {
    eventAct:CalendarEvent;
    option1 = false;
    option2 = false;
+   locale: string = 'es';
    espacio34:EspacioDeportivo;
    @Input() selectEspacio: EspacioDeportivo;
    reservaSave:ReservaEspacio;
@@ -87,6 +90,9 @@ export class CalendarComponent implements OnInit {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [];
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+
+  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
   constructor(private modal: NgbModal, private espacioService:EspaciodeportivoService) { 
   
