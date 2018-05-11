@@ -17,7 +17,7 @@ export class HorarioFijoComponent implements OnInit {
 
   @ViewChild (CalendarComponent) calendario;
   private deportes:Deporte[];
-
+ 
   private horaI = "7 am";
   private horaF = "9 am";
   selectedDeporte:Deporte ;

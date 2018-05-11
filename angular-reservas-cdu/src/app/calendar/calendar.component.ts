@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,TemplateRef,ChangeDetectionStrategy,Input } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import {
   startOfDay,
   endOfDay,
@@ -7,7 +7,13 @@ import {
   endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours
+  addHours,
+  getSeconds,
+  getMinutes,
+  getHours,
+  setHours,
+  setSeconds,
+  setMinutes,
 } from 'date-fns';
 import { ReservaEspacio } from '../reservaespacio';
 import {
@@ -19,9 +25,11 @@ import {
 } from 'angular-calendar';
 import { DemoUtilsModule } from '../../demo-utils/module';
 import { Subject } from 'rxjs/Subject';
+import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EspacioDeportivo } from '../espaciodeportivo';
 import { EspaciodeportivoService } from '../espaciodeportivo.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -39,25 +47,39 @@ const colors: any = {
 
 @Component({
   selector: 'app-calendar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
 
-   @ViewChild('modalContent') modalContent: TemplateRef<any>;
-   view: string = 'month';
-   eventActual: CalendarEvent[];
-   eventAct:CalendarEvent;
-   option1 = false;
-   option2 = false;
-   locale: string = 'es';
-   espacio34:EspacioDeportivo;
-   @Input() selectEspacio: EspacioDeportivo;
-   reservaSave:ReservaEspacio;
-   reservaAct:ReservaEspacio=new ReservaEspacio(0,new Date(),new Date(),'','','',false,null);
-   reservasActuales:ReservaEspacio[];
-   tipoSelect = [
+  inicioDiarioStruct = {
+    hour: 2,
+    minute: 23,
+    second: 0
+
+  };
+  finalDiarioStruct = {
+    hour: 2,
+    minute: 23,
+    second: 0
+
+  };
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  view: string = 'month';
+  name= "final";
+  eventActual: CalendarEvent[];
+  eventAct: CalendarEvent;
+  option1 = false;
+  option2 = false;
+  locale: string = 'es';
+  espacio34: EspacioDeportivo;
+  @Input() selectEspacio: EspacioDeportivo;
+  reservaSave: ReservaEspacio;
+  reservaAct: ReservaEspacio = new ReservaEspacio(0, new Date(), new Date(), '', '', '', false, null);
+  reservasActuales: ReservaEspacio[];
+
+  
+  tipoSelect = [
     { value: 'Academico', text: 'Academico' },
     { value: 'Normal', text: 'Normal' },
     { value: 'Evento', text: 'Evento' },
@@ -94,34 +116,52 @@ export class CalendarComponent implements OnInit {
 
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
-  constructor(private modal: NgbModal, private espacioService:EspaciodeportivoService) { 
   
+  constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef) {
+    this.inicioDiarioStruct = {
+      hour: 2,
+      minute: 23,
+      second: 0
+  
+    };
+    this.finalDiarioStruct = {
+      hour: 2,
+      minute: 23,
+      second: 0
+  
+    };
   }
 
+  formReserva: FormGroup;
   ngOnInit() {
-    
-    this.getReservasEspacio();
-  
-    
-    
-  }
-  getReservasEspacio(){
 
-    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio).subscribe(reservas =>{
-      this.reservasActuales = reservas;
+    this.getReservasEspacio();
+    this.formReserva = new FormGroup({
+      'inicioDiarioStruct': new FormControl(this.inicioDiarioStruct),
+      'finalDiarioStruct': new FormControl(this.finalDiarioStruct),
+    });
     
-      this.cargarReservas();
-    } );
-    
+
+
+
   }
-  cargarReservas(){
-    console.log("lengt"+this.reservasActuales.length);
-    for(let i=0;i<this.reservasActuales.length;i++){
+  getReservasEspacio() {
+
+    this.espacioService.getReservasEspacio(this.selectEspacio.idEspacio).subscribe(reservas => {
+      this.reservasActuales = reservas;
+
+      this.cargarReservas();
+    });
+
+  }
+  cargarReservas() {
+    console.log("lengt" + this.reservasActuales.length);
+    for (let i = 0; i < this.reservasActuales.length; i++) {
       //let fechaIni= this.setFecha(this.reservasActuales[i].fechaini);
       //let fechafin = this.setFecha(this.reservasActuales[i].fechafin);
       console.log(this.reservasActuales[i].nombre);
-     // console.log("fecha ini"+fechaIni);
-      console.log("date"+new Date(this.reservasActuales[i].fechaini));
+      // console.log("fecha ini"+fechaIni);
+      console.log("date" + new Date(this.reservasActuales[i].fechaini));
       this.events.push({
         title: this.reservasActuales[i].nombre.toString(),
         start: new Date(this.reservasActuales[i].fechaini),
@@ -138,14 +178,14 @@ export class CalendarComponent implements OnInit {
     this.refresh.next();
   }
 
-  setFecha(fecha : Date):Date{
-    let fecha2=new Date();
+  setFecha(fecha: Date): Date {
+    let fecha2 = new Date();
     fecha2.setMonth(fecha.getMonth());
-    fecha2.setHours(fecha.getHours(),fecha.getMinutes(),fecha.getSeconds());
+    fecha2.setHours(fecha.getHours(), fecha.getMinutes(), fecha.getSeconds());
     return fecha2;
-  
+
   }
-   eventTimesChanged({	
+  eventTimesChanged({
     event,
     newStart,
     newEnd
@@ -155,78 +195,141 @@ export class CalendarComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
     this.refresh.next();
   }
-   handleEvent(action: string, event: CalendarEvent): void {
+  handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
-  addReserva(event){
+  addReserva(event) {
 
-    this.eventAct={
+    this.eventAct = {
       title: this.reservaAct.nombre.toString(),
       start: this.viewDate,
       end: this.viewDate,
-       color: colors.red,
-        draggable: true,
-        resizable: {
+      color: colors.red,
+      draggable: true,
+      resizable: {
         beforeStart: true,
         afterEnd: true
-        }
+      }
+    };
+
+    console.log("reserva:" + this.reservasActuales.length);
+
+  }
+  onFilteroption1(ischecked: boolean) {
+    this.option1 = true;
+    this.option2 = false;
+  }
+  onFilteroption2(ischecked: boolean) {
+    this.option2 = true;
+    this.option1 = false;
+
+    this.inicioDiarioStruct={second: getSeconds(this.viewDate),
+    minute: getMinutes(this.viewDate),
+    hour: getHours(this.viewDate)
+    };
+
+    this.finalDiarioStruct={second: getSeconds(this.viewDate),
+      minute: getMinutes(this.viewDate),
+      hour: getHours(this.viewDate)
       };
+
     
-      console.log("reserva:"+this.reservasActuales.length);
 
-  }
-  onFilteroption1(ischecked:boolean){
-   this.option1=true;
-   this.option2=false;
-  }
-  onFilteroption2(ischecked:boolean){
-    this.option2=true;
-    this.option1=false;
 
+    // this.cdr.detectChanges();
   }
-  guardarReserva(event){
-    console.log("espacio seleccionado"+this.selectEspacio.nombre);
-    const inicio=this.eventAct.start;
-    const final=this.eventAct.end;
-    let reservaActual=this.reservaAct;
-    reservaActual.idEspacio=this.selectEspacio;
-    reservaActual.esfija=this.option1;
-    
-    console.log("inicio1"+inicio);
-    console.log("inicio2:"+final);
-    //inicio.setDate(inicio.getDate()+7);
-    console.log("inicio"+inicio);
-    if(final>=inicio){
-      console.log("Entro en el if");
-      while(inicio<=final){
-        console.log("Entro en el bucle");
-        //aqui se crea una reserva cada 8 dias
-        let inicioCopia=new Date();
-        let inicioCopia2=new Date();
-        //final del evento
-        inicioCopia.setDate(inicio.getDate());
-        inicioCopia.setMonth(inicio.getMonth());
-        inicioCopia.setHours(final.getHours(),final.getMinutes(),final.getSeconds());
-        //inicio del evento
-        inicioCopia2.setDate(inicio.getDate());
-        inicioCopia2.setMonth(inicio.getMonth());
-        inicioCopia2.setHours(inicio.getHours(),inicio.getMinutes(),inicio.getSeconds());
-        console.log("Inicio de hora"+inicio);
-        console.log("Final de Hora"+inicioCopia);
-        console.log("Inicio del evento"+inicioCopia2);
-        //aqui se reserva 
-        reservaActual.fechaini=inicioCopia2;
-        reservaActual.fechafin=inicioCopia;
-      
-        
-        this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual=>{this.reservaSave=reservaActual});
-        
+  guardarReserva(event) {
+    console.log("espacio seleccionado" + this.selectEspacio.nombre);
+    const inicio = this.eventAct.start;
+    const final = this.eventAct.end;
+    let reservaActual = this.reservaAct;
+    reservaActual.idEspacio = this.selectEspacio;
+    if(this.option1){
+      reservaActual.esfija = this.option1;
 
+      console.log("inicio1" + inicio);
+      console.log("inicio2:" + final);
+      //inicio.setDate(inicio.getDate()+7);
+      console.log("inicio" + inicio);
+      if (final >= inicio) {
+        console.log("Entro en el if");
+        while (inicio <= final) {
+          console.log("Entro en el bucle");
+          //aqui se crea una reserva cada 8 dias
+          let inicioCopia = new Date();
+          let inicioCopia2 = new Date();
+          //final del evento
+          inicioCopia.setDate(inicio.getDate());
+          inicioCopia.setMonth(inicio.getMonth());
+          inicioCopia.setHours(final.getHours(), final.getMinutes(), final.getSeconds());
+          //inicio del evento
+          inicioCopia2.setDate(inicio.getDate());
+          inicioCopia2.setMonth(inicio.getMonth());
+          inicioCopia2.setHours(inicio.getHours(), inicio.getMinutes(), inicio.getSeconds());
+          console.log("Inicio de hora" + inicio);
+          console.log("Final de Hora" + inicioCopia);
+          console.log("Inicio del evento" + inicioCopia2);
+          //aqui se reserva 
+          reservaActual.fechaini = inicioCopia2;
+          reservaActual.fechafin = inicioCopia;
+  
+  
+          this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
+  
+  
+          this.events.push({
+            title: this.reservaAct.nombre.toString(),
+            start: inicioCopia2,
+            end: inicioCopia,
+            color: colors.red,
+            draggable: true,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true
+            }
+          });
+          inicio.setDate(inicio.getDate() + 7);
+        }
+  
+      } else {
+        //la reserva no puede ser fija
+  
+      }
+  
+      this.refresh.next();
+  
+    }
+    else{
+      reservaActual.esfija=this.option2;
+      const InicioDate: Date = setHours(
+          setMinutes(
+            setSeconds(inicio, this.inicioDiarioStruct.second),
+            this.inicioDiarioStruct.minute
+          ),
+          this.inicioDiarioStruct.hour
+        );
+
+        const FinalDate: Date = setHours(
+          setMinutes(
+            setSeconds(final, this.finalDiarioStruct.second),
+            this.finalDiarioStruct.minute
+          ),
+          this.finalDiarioStruct.hour
+        );
+        console.log("Inicio de Reserva"+InicioDate);
+        console.log("Final de Reserva"+FinalDate); 
+
+        reservaActual.fechaini = InicioDate;
+        reservaActual.fechafin = FinalDate;
+
+        this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
+  
+  
         this.events.push({
           title: this.reservaAct.nombre.toString(),
-          start: inicioCopia2,
-          end: inicioCopia,
+          start: InicioDate,
+          end:FinalDate,
           color: colors.red,
           draggable: true,
           resizable: {
@@ -234,15 +337,16 @@ export class CalendarComponent implements OnInit {
             afterEnd: true
           }
         });
-        inicio.setDate(inicio.getDate()+7);
-      }
 
-    }else{
-     //la reserva no puede ser fija
-     
     }
-
-    this.refresh.next();
+    
+  }
+  updateTimeInicio(): void {
+      //AQUI DEBO HACER EL UPDATE A EL VIEWDATE
+   
+  }
+  updateTimeFinal(): void {
+    
 
   }
 
