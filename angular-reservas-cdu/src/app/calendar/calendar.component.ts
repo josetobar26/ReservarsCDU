@@ -137,6 +137,11 @@ export class CalendarComponent implements OnInit {
 
     this.getReservasEspacio();
     this.formReserva = new FormGroup({
+      'nombre':new FormControl(this.reservaAct.nombre,[
+        Validators.required,
+        Validators.maxLength(20)]),
+      'tipo':new FormControl(this.reservaAct.tipo,  
+      Validators.required),
       'inicioDiarioStruct': new FormControl(this.inicioDiarioStruct),
       'finalDiarioStruct': new FormControl(this.finalDiarioStruct),
     });
@@ -245,6 +250,8 @@ export class CalendarComponent implements OnInit {
     const final = this.eventAct.end;
     let reservaActual = this.reservaAct;
     reservaActual.idEspacio = this.selectEspacio;
+    reservaActual.nombre=this.formReserva.get('nombre').value;
+    reservaActual.tipo=this.formReserva.get('tipo').value;
     if(this.option1){
       reservaActual.esfija = this.option1;
 
