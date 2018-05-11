@@ -20,6 +20,7 @@ import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.compo
 import { MenuNavegacionComponent } from './menu-navegacion/menu-navegacion.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DemoUtilsModule } from '../demo-utils/module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -39,7 +40,8 @@ registerLocaleData(localeEs);
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule, 
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
