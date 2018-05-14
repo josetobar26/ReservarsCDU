@@ -66,7 +66,7 @@ export class CalendarComponent implements OnInit {
   };
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   view: string = 'month';
-  name= "final";
+  name = "final";
   eventActual: CalendarEvent[];
   eventAct: CalendarEvent;
   option1 = false;
@@ -78,7 +78,7 @@ export class CalendarComponent implements OnInit {
   reservaAct: ReservaEspacio = new ReservaEspacio(0, new Date(), new Date(), '', '', '', false, null);
   reservasActuales: ReservaEspacio[];
 
-  
+
   tipoSelect = [
     { value: 'Academico', text: 'Academico' },
     { value: 'Normal', text: 'Normal' },
@@ -116,19 +116,19 @@ export class CalendarComponent implements OnInit {
 
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
-  
+
   constructor(private modal: NgbModal, private espacioService: EspaciodeportivoService, private cdr: ChangeDetectorRef) {
     this.inicioDiarioStruct = {
       hour: 2,
       minute: 23,
       second: 0
-  
+
     };
     this.finalDiarioStruct = {
       hour: 2,
       minute: 23,
       second: 0
-  
+
     };
   }
 
@@ -137,15 +137,15 @@ export class CalendarComponent implements OnInit {
 
     this.getReservasEspacio();
     this.formReserva = new FormGroup({
-      'nombre':new FormControl(this.reservaAct.nombre,[
+      'nombre': new FormControl(this.reservaAct.nombre, [
         Validators.required,
         Validators.maxLength(20)]),
-      'tipo':new FormControl(this.reservaAct.tipo,  
-      Validators.required),
+      'tipo': new FormControl(this.reservaAct.tipo,
+        Validators.required),
       'inicioDiarioStruct': new FormControl(this.inicioDiarioStruct),
       'finalDiarioStruct': new FormControl(this.finalDiarioStruct),
     });
-    
+
 
 
 
@@ -172,6 +172,7 @@ export class CalendarComponent implements OnInit {
         start: new Date(this.reservasActuales[i].fechaini),
         end: new Date(this.reservasActuales[i].fechafin),
         color: colors.red,
+        actions: this.actions,
         draggable: true,
         resizable: {
           beforeStart: true,
@@ -211,6 +212,7 @@ export class CalendarComponent implements OnInit {
       start: this.viewDate,
       end: this.viewDate,
       color: colors.red,
+      actions: this.actions,
       draggable: true,
       resizable: {
         beforeStart: true,
@@ -221,6 +223,26 @@ export class CalendarComponent implements OnInit {
     console.log("reserva:" + this.reservasActuales.length);
 
   }
+
+  deleteReserva(event) {
+    this.eventAct = {
+      title: this.reservaAct.nombre.toString(),
+      start: this.viewDate,
+      end: this.viewDate,
+      color: colors.red,
+      actions: this.actions,
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      }
+    };
+
+    console.log("reserva Eliminada:" + this.reservasActuales.length);
+
+  }
+
+
   onFilteroption1(ischecked: boolean) {
     this.option1 = true;
     this.option2 = false;
@@ -229,17 +251,19 @@ export class CalendarComponent implements OnInit {
     this.option2 = true;
     this.option1 = false;
 
-    this.inicioDiarioStruct={second: getSeconds(this.viewDate),
-    minute: getMinutes(this.viewDate),
-    hour: getHours(this.viewDate)
-    };
-
-    this.finalDiarioStruct={second: getSeconds(this.viewDate),
+    this.inicioDiarioStruct = {
+      second: getSeconds(this.viewDate),
       minute: getMinutes(this.viewDate),
       hour: getHours(this.viewDate)
-      };
+    };
 
-    
+    this.finalDiarioStruct = {
+      second: getSeconds(this.viewDate),
+      minute: getMinutes(this.viewDate),
+      hour: getHours(this.viewDate)
+    };
+
+
 
 
     // this.cdr.detectChanges();
@@ -250,9 +274,9 @@ export class CalendarComponent implements OnInit {
     const final = this.eventAct.end;
     let reservaActual = this.reservaAct;
     reservaActual.idEspacio = this.selectEspacio;
-    reservaActual.nombre=this.formReserva.get('nombre').value;
-    reservaActual.tipo=this.formReserva.get('tipo').value;
-    if(this.option1){
+    reservaActual.nombre = this.formReserva.get('nombre').value;
+    reservaActual.tipo = this.formReserva.get('tipo').value;
+    if (this.option1) {
       reservaActual.esfija = this.option1;
 
       console.log("inicio1" + inicio);
@@ -280,11 +304,11 @@ export class CalendarComponent implements OnInit {
           //aqui se reserva 
           reservaActual.fechaini = inicioCopia2;
           reservaActual.fechafin = inicioCopia;
-  
-  
+
+
           this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-  
-  
+
+
           this.events.push({
             title: this.reservaAct.nombre.toString(),
             start: inicioCopia2,
@@ -298,62 +322,89 @@ export class CalendarComponent implements OnInit {
           });
           inicio.setDate(inicio.getDate() + 7);
         }
-  
+
       } else {
         //la reserva no puede ser fija
-  
+
       }
-  
+
       this.refresh.next();
-  
+
     }
-    else{
-      reservaActual.esfija=this.option2;
+    else {
+      reservaActual.esfija = this.option2;
       const InicioDate: Date = setHours(
-          setMinutes(
-            setSeconds(inicio, this.inicioDiarioStruct.second),
-            this.inicioDiarioStruct.minute
-          ),
-          this.inicioDiarioStruct.hour
-        );
+        setMinutes(
+          setSeconds(inicio, this.inicioDiarioStruct.second),
+          this.inicioDiarioStruct.minute
+        ),
+        this.inicioDiarioStruct.hour
+      );
 
-        const FinalDate: Date = setHours(
-          setMinutes(
-            setSeconds(final, this.finalDiarioStruct.second),
-            this.finalDiarioStruct.minute
-          ),
-          this.finalDiarioStruct.hour
-        );
-        console.log("Inicio de Reserva"+InicioDate);
-        console.log("Final de Reserva"+FinalDate); 
+      const FinalDate: Date = setHours(
+        setMinutes(
+          setSeconds(final, this.finalDiarioStruct.second),
+          this.finalDiarioStruct.minute
+        ),
+        this.finalDiarioStruct.hour
+      );
+      console.log("Inicio de Reserva" + InicioDate);
+      console.log("Final de Reserva" + FinalDate);
 
-        reservaActual.fechaini = InicioDate;
-        reservaActual.fechafin = FinalDate;
+      reservaActual.fechaini = InicioDate;
+      reservaActual.fechafin = FinalDate;
 
-        this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-  
-  
-        this.events.push({
-          title: this.reservaAct.nombre.toString(),
-          start: InicioDate,
-          end:FinalDate,
-          color: colors.red,
-          draggable: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true
-          }
-        });
+      this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
+
+
+      this.events.push({
+        title: this.reservaAct.nombre.toString(),
+        start: InicioDate,
+        end: FinalDate,
+        color: colors.red,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        }
+      });
 
     }
-    
   }
+
+  eliminarReserva(event) {
+    //console.log("title: " + this.modalData.event.title);
+
+    console.log("ELIMINANDO...");
+    let reservaActual;
+    //console.log("nombre reserva: " + reservaActual.nombre.toString);
+    //console.log("nombre reservaAct: " + this.reservaAct.nombre.toString);
+    for (let i = 0; i < this.reservasActuales.length; i++) {
+      if (this.reservasActuales[i].nombre == this.modalData.event.title) {
+        console.log("Reserva encontrada para eliminar: ");
+        let reservaActual = this.reservasActuales[i];
+        console.log("id Reserva: " + reservaActual.idReserva);
+
+        this.espacioService.eliminarReservaEspacio(reservaActual.idReserva).subscribe(
+          ok => {
+            if (ok) {
+              //window.location.reload();
+            } else {
+              alert("SE HA PRESENTADO UN ERROR, POR FAVOR INTENTE NUEVAMENTE.");
+            }
+          });
+      }
+    }
+
+  }
+
+
   updateTimeInicio(): void {
-      //AQUI DEBO HACER EL UPDATE A EL VIEWDATE
-   
+    //AQUI DEBO HACER EL UPDATE A EL VIEWDATE
+
   }
   updateTimeFinal(): void {
-    
+
 
   }
 

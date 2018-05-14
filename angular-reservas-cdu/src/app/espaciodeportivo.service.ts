@@ -37,45 +37,45 @@ export class EspaciodeportivoService {
 
     //------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------
 
-guardarEspacioDeportivo (newEspacio: EspacioDeportivo): Observable<EspacioDeportivo> {
-    //        let json = JSON.stringify(newEspacio);
-            console.log(newEspacio);
-    //        const url= '${this.espaciosUrl}/Agregar';
-            return this.http.post<EspacioDeportivo>(this.espaciosUrl, newEspacio, httpOptions).pipe(
-                tap((newEspacio: EspacioDeportivo) => this.log('added hero w/ id=${newEspacio.idEspacio}')),
-                catchError(this.handleError<EspacioDeportivo>('addHero'))
-            );
-        }
-    
-    //------------------------------------------------------------------------------
-    
-    actualizarEspacioDeportivo (newEspacio: EspacioDeportivo): Observable<Boolean> {
+    guardarEspacioDeportivo(newEspacio: EspacioDeportivo): Observable<EspacioDeportivo> {
         //        let json = JSON.stringify(newEspacio);
-                console.log(newEspacio);
+        console.log(newEspacio);
         //        const url= '${this.espaciosUrl}/Agregar';
-                return this.http.put<Boolean>(this.espaciosUrl, newEspacio, httpOptions).pipe(
-                    tap(ok => this.log(`updated hero w/ id=${newEspacio.idEspacio}`)),
-                    catchError(this.handleError<Boolean>('updateHero'))
-                );
-            }
-        
+        return this.http.post<EspacioDeportivo>(this.espaciosUrl, newEspacio, httpOptions).pipe(
+            tap((newEspacio: EspacioDeportivo) => this.log('added hero w/ id=${newEspacio.idEspacio}')),
+            catchError(this.handleError<EspacioDeportivo>('addHero'))
+        );
+    }
+
     //------------------------------------------------------------------------------
-    
-    eliminarEspacioDeportivo (newEspacio: EspacioDeportivo | number): Observable<Boolean> {
+
+    actualizarEspacioDeportivo(newEspacio: EspacioDeportivo): Observable<Boolean> {
         //        let json = JSON.stringify(newEspacio);
-                console.log(newEspacio);
-                const id = typeof newEspacio === 'number' ? newEspacio : newEspacio.idEspacio;
-                const url = `${this.espaciosUrl}/${id}`;
-            //        const url= '${this.espaciosUrl}/Agregar';
-                return this.http.delete<Boolean>(url, httpOptions).pipe(
-                    tap(ok => this.log('deleted hero w/ id=${newEspacio.idEspacio}')),
-                    catchError(this.handleError<Boolean>('deleteHero'))
-                );
-            }
-        
-    
+        console.log(newEspacio);
+        //        const url= '${this.espaciosUrl}/Agregar';
+        return this.http.put<Boolean>(this.espaciosUrl, newEspacio, httpOptions).pipe(
+            tap(ok => this.log(`updated hero w/ id=${newEspacio.idEspacio}`)),
+            catchError(this.handleError<Boolean>('updateHero'))
+        );
+    }
+
+    //------------------------------------------------------------------------------
+
+    eliminarEspacioDeportivo(newEspacio: EspacioDeportivo | number): Observable<Boolean> {
+        //        let json = JSON.stringify(newEspacio);
+        console.log(newEspacio);
+        const id = typeof newEspacio === 'number' ? newEspacio : newEspacio.idEspacio;
+        const url = `${this.espaciosUrl}/${id}`;
+        //        const url= '${this.espaciosUrl}/Agregar';
+        return this.http.delete<Boolean>(url, httpOptions).pipe(
+            tap(ok => this.log('deleted hero w/ id=${newEspacio.idEspacio}')),
+            catchError(this.handleError<Boolean>('deleteHero'))
+        );
+    }
+
+
 
     //------------------------------------------------------------------------------
 
@@ -103,23 +103,36 @@ guardarEspacioDeportivo (newEspacio: EspacioDeportivo): Observable<EspacioDeport
                 catchError(this.handleError('getEscenariosforid', []))
             );
     }
-    guardarReservaEspacio(reservaActual:ReservaEspacio): Observable<ReservaEspacio>{
+    guardarReservaEspacio(reservaActual: ReservaEspacio): Observable<ReservaEspacio> {
         console.log(reservaActual);
-        const url=  `${this.espaciosUrl}/AgregarReserva`;
+        const url = `${this.espaciosUrl}/AgregarReserva`;
         return this.http.post<ReservaEspacio>(url, reservaActual, httpOptions).pipe(
             tap((reservaActual: ReservaEspacio) => this.log('added Reserva w/ id=${reservaActual.idReserva}')),
             catchError(this.handleError<ReservaEspacio>('addReserva'))
         );
 
     }
-    getReservasEspacio(idespacio:number):Observable<ReservaEspacio[]>{
+    getReservasEspacio(idespacio: number): Observable<ReservaEspacio[]> {
         console.log(idespacio);
-        const url=  `${this.espaciosUrl}/Reserva/${idespacio}`;
-        return  this.http.get<ReservaEspacio[]>(url)
-        .pipe(
-            tap(reservas => this.log(`fetched reservas id=${idespacio}`)),
-            catchError(this.handleError('getReservasEspacio', []))
-        ); 
+        const url = `${this.espaciosUrl}/Reserva/${idespacio}`;
+        return this.http.get<ReservaEspacio[]>(url)
+            .pipe(
+                tap(reservas => this.log(`fetched reservas id=${idespacio}`)),
+                catchError(this.handleError('getReservasEspacio', []))
+            );
+    }
+
+
+    eliminarReservaEspacio(reservaActual: ReservaEspacio | number): Observable<Boolean> {
+        //        let json = JSON.stringify(newEspacio);
+        console.log(reservaActual);
+        const id = typeof reservaActual === 'number' ? reservaActual : reservaActual.idEspacio;
+        const url = `${this.espaciosUrl}/${id}`;
+        //        const url= '${this.espaciosUrl}/Agregar';
+        return this.http.delete<Boolean>(url, httpOptions).pipe(
+            tap(ok => this.log('deleted Reserva w/ id=${reservaActual.idReserva}')),
+            catchError(this.handleError<Boolean>('deleteReserva'))
+        );
     }
 
 }
