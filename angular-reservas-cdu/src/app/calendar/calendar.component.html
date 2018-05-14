@@ -53,16 +53,21 @@
 
 <br>
 <br>
+<div class="row">
+  <div class="col-md-8">
+    
+  </div>
+  <div class="col-md-4">
+   
+    <button class="btn btn-primary float-right" (click)="addReserva($event)" type="submit" data-toggle="modal"
+      data-target="#modalCrearReserva">
+      Añadir Nueva Reserva
+    </button>
+  </div>
+
+</div>
 <br>
 
-<h3>
-  Edit events
-  <button class="btn btn-primary pull-left" (click)="addReserva($event)" type="submit" class="btn btn-primary" data-toggle="modal"
-    data-target="#modalCrearReserva">
-    Add new
-  </button>
-
-</h3>
 
 
 <div class="modal fade" id="modalCrearReserva" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -106,9 +111,9 @@
                 <div class="col-10">
                   <input class="form-control" id="nombre" type="text" formControlName="nombre"  name="nombre" required
                     id="nombre-text-input" #nombre>
-                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">
-                    <div *ngIf="nombre.errors.required">El nombre es requerido.</div>
-                    <div *ngIf="nombre.errors.maxlength">El nombre supera la longitud maxima de caracteres (maximo 20 caracteres).</div>
+                  <div *ngIf="formReserva.controls['nombre'].invalid && (formReserva.controls['nombre'].dirty || formReserva.controls['nombre'].touched)" class="alert alert-danger">
+                    <div *ngIf="formReserva.controls['nombre'].errors.required">El nombre es requerido.</div>
+                    <div *ngIf="formReserva.controls['nombre'].errors.maxlength">El nombre supera la longitud maxima de caracteres (maximo 20 caracteres).</div>
                   </div>
                 </div>
               </div>
@@ -129,8 +134,8 @@
                     <option value="">Seleccione...</option>
                     <option *ngFor="let opcion of tipoSelect" [value]="opcion.value">{{opcion.text}}</option>
                   </select>
-                  <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
-                    <div *ngIf="tipo.errors.required">El tipo de Reserva es requerido.</div>
+                  <div *ngIf="formReserva.controls['tipo'].invalid && (formReserva.controls['tipo'].dirty || formReserva.controls['tipo'].touched)" class="alert alert-danger">
+                    <div *ngIf="formReserva.controls['tipo'].errors.required">El tipo de Reserva es requerido.</div>
                   </div>
                 </div>
 
