@@ -60,4 +60,15 @@ public class ReservaBean {
         }
         return reservaEspacio;
     }
+    public String deleteReserva(int id){
+        System.out.println("id de Reserva a eliminar"+id);
+        emf=Persistence.createEntityManagerFactory("CRUD_EscenariosPU");
+        ReservaEspacioJpaController ctrl= new ReservaEspacioJpaController(emf);
+        try{
+            ctrl.destroy(id);
+            return "true";
+        }catch(Exception e){
+            return "false";
+        }
+    }
 }

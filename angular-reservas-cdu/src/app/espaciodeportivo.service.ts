@@ -123,15 +123,15 @@ export class EspaciodeportivoService {
     }
 
 
-    eliminarReservaEspacio(reservaActual: ReservaEspacio | number): Observable<Boolean> {
+    eliminarReservaEspacio(reservaActual: ReservaEspacio | number): Observable<boolean> {
         //        let json = JSON.stringify(newEspacio);
         console.log(reservaActual);
         const id = typeof reservaActual === 'number' ? reservaActual : reservaActual.idEspacio;
-        const url = `${this.espaciosUrl}/${id}`;
+        const url = `${this.espaciosUrl}/ReservaDelete/${id}`;
         //        const url= '${this.espaciosUrl}/Agregar';
-        return this.http.delete<Boolean>(url, httpOptions).pipe(
-            tap(ok => this.log('deleted Reserva w/ id=${reservaActual.idReserva}')),
-            catchError(this.handleError<Boolean>('deleteReserva'))
+        return this.http.delete<boolean>(url, httpOptions).pipe(
+            tap(ok => this.log('deleted Reserva w/ id=${id}')),
+            catchError(this.handleError<boolean>('deleteReserva'))
         );
     }
 

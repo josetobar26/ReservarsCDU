@@ -71,6 +71,7 @@ export class CalendarComponent implements OnInit {
   eventAct: CalendarEvent;
   option1 = false;
   option2 = false;
+  control= false;
   locale: string = 'es';
   espacio34: EspacioDeportivo;
   @Input() selectEspacio: EspacioDeportivo;
@@ -80,7 +81,7 @@ export class CalendarComponent implements OnInit {
 
 
   tipoSelect = [
-    { value: 'Academico', text: 'Academico' },
+    { value: 'Academico', text: 'Academico' },  
     { value: 'Normal', text: 'Normal' },
     { value: 'Evento', text: 'Evento' },
     { value: 'Seleccionados', text: 'Seleccionados' },
@@ -204,6 +205,8 @@ export class CalendarComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+    
+  
   }
   addReserva(event) {
 
@@ -314,6 +317,7 @@ export class CalendarComponent implements OnInit {
             start: inicioCopia2,
             end: inicioCopia,
             color: colors.red,
+            actions: this.actions,
             draggable: true,
             resizable: {
               beforeStart: true,
@@ -362,6 +366,7 @@ export class CalendarComponent implements OnInit {
         start: InicioDate,
         end: FinalDate,
         color: colors.red,
+        actions: this.actions,
         draggable: true,
         resizable: {
           beforeStart: true,
@@ -370,6 +375,7 @@ export class CalendarComponent implements OnInit {
       });
 
     }
+    this.refresh.next();
   }
 
   eliminarReserva(event) {
@@ -379,6 +385,7 @@ export class CalendarComponent implements OnInit {
     let reservaActual;
     //console.log("nombre reserva: " + reservaActual.nombre.toString);
     //console.log("nombre reservaAct: " + this.reservaAct.nombre.toString);
+    
     for (let i = 0; i < this.reservasActuales.length; i++) {
       if (this.reservasActuales[i].nombre == this.modalData.event.title) {
         console.log("Reserva encontrada para eliminar: ");
@@ -386,13 +393,10 @@ export class CalendarComponent implements OnInit {
         console.log("id Reserva: " + reservaActual.idReserva);
 
         this.espacioService.eliminarReservaEspacio(reservaActual.idReserva).subscribe(
-          ok => {
-            if (ok) {
-              //window.location.reload();
-            } else {
-              alert("SE HA PRESENTADO UN ERROR, POR FAVOR INTENTE NUEVAMENTE.");
-            }
-          });
+          ok => { this.control= ok
+          }
+          );
+        break;  
       }
     }
 

@@ -158,6 +158,13 @@ public class EscenarioRest {
         escenariobean.delete(id);
         return "true";
     }
+    @DELETE
+    @Path("ReservaDelete/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String deleteReserva(@PathParam("id") int id){
+        System.out.println("id de Reserva a eliminar"+id);
+        return reservabean.deleteReserva(id);
+    }
 
     @GET
     @Path("Reserva/{id}")
