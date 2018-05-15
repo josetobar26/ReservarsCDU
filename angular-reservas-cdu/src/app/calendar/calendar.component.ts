@@ -143,6 +143,7 @@ export class CalendarComponent implements OnInit {
         Validators.maxLength(20)]),
       'tipo': new FormControl(this.reservaAct.tipo,
         Validators.required),
+      'descripcion': new FormControl(this.reservaAct.descripcion,Validators.maxLength(500)) , 
       'inicioDiarioStruct': new FormControl(this.inicioDiarioStruct),
       'finalDiarioStruct': new FormControl(this.finalDiarioStruct),
     });
@@ -209,7 +210,7 @@ export class CalendarComponent implements OnInit {
   
   }
   addReserva(event) {
-
+    this.formReserva.reset();
     this.eventAct = {
       title: this.reservaAct.nombre.toString(),
       start: this.viewDate,
@@ -222,7 +223,7 @@ export class CalendarComponent implements OnInit {
         afterEnd: true
       }
     };
-
+    
     console.log("reserva:" + this.reservasActuales.length);
 
   }
@@ -279,6 +280,7 @@ export class CalendarComponent implements OnInit {
     reservaActual.idEspacio = this.selectEspacio;
     reservaActual.nombre = this.formReserva.get('nombre').value;
     reservaActual.tipo = this.formReserva.get('tipo').value;
+    reservaActual.descripcion=this.formReserva.get('descripcion').value;
     if (this.option1) {
       reservaActual.esfija = this.option1;
 
@@ -359,7 +361,7 @@ export class CalendarComponent implements OnInit {
       reservaActual.fechafin = FinalDate;
 
       this.espacioService.guardarReservaEspacio(reservaActual).subscribe(reservaActual => { this.reservaSave = reservaActual });
-
+      this.reservasActuales.push(reservaActual);
 
       this.events.push({
         title: this.reservaAct.nombre.toString(),
@@ -393,9 +395,11 @@ export class CalendarComponent implements OnInit {
         console.log("id Reserva: " + reservaActual.idReserva);
 
         this.espacioService.eliminarReservaEspacio(reservaActual.idReserva).subscribe(
-          ok => { this.control= ok
+          ok => { this.control= ok 
+            console.log("valor retornado2"+ok);
           }
           );
+        console.log("valor retornado"+this.control);
         break;  
       }
     }

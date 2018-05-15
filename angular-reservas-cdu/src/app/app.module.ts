@@ -2,7 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule }     from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule } from 'angular-calendar';
@@ -22,6 +22,16 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { DemoUtilsModule } from '../demo-utils/module';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/index';
+
+import { fakeBackendProvider } from './helpers/index';
+import { Autenticacion } from './autenticacion/index';
+import { JwtInterceptor } from './helpers/index';
+import { AlertService, UsuarioService, AutenticacionService} from './servicios/index';
+import { AlertComponent } from './alertas/index';
+
+
 
 
 registerLocaleData(localeEs);
@@ -36,7 +46,10 @@ registerLocaleData(localeEs);
     HorarioFijoComponent,
     EdicionReservaComponent,
     MenuNavegacionComponent,
-    CalendarComponent
+    CalendarComponent,
+    LoginComponent,
+    RegistroComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +61,19 @@ registerLocaleData(localeEs);
     CalendarModule.forRoot(),
     DemoUtilsModule
   ],
-  providers: [MessageService,EspaciodeportivoService],
+  providers: [MessageService,EspaciodeportivoService,
+    Autenticacion,
+    AutenticacionService,
+    AlertService,
+    UsuarioService,
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: JwtInterceptor,
+        multi: true
+    },
+
+    // provider used to create fake backend
+    fakeBackendProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule {

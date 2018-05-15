@@ -68,7 +68,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Si, Cerrar Sesión</button>
+        <a type="button" class="btn btn-primary" href="/login">Si, Cerrar Sesión</a>
       </div>
     </div>
   </div>
@@ -127,6 +127,7 @@
     </nav>
     <!-- CIERRA NAV-->
     <div class="col-sm-9">
+      <alert></alert>
       <router-outlet></router-outlet>
       <app-messages></app-messages>
     </div>
