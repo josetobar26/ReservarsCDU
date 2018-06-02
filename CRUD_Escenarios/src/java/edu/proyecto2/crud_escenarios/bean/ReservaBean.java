@@ -7,6 +7,7 @@ package edu.proyecto2.crud_escenarios.bean;
 
 import edu.proyecto2.crud_escenarios.data.Deporte;
 import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
+import edu.proyecto2.crud_escenarios.data.Usuario;
 import edu.proyecto2.crud_escenarios.jpa.EspacioDeportivoJpaController;
 import edu.proyecto2.crud_escenarios.jpa.ReservaEspacioJpaController;
 import java.util.ArrayList;
@@ -37,8 +38,9 @@ public class ReservaBean {
     }
     public void guardarReserva(ReservaEspacio objReserva){
         System.out.println("Reserva"+objReserva.getFechafin());
+        Usuario objUsuario= new Usuario(2,"josej","tricolor","Invitado","104614010913","Jose Julio","Tobar Cifuentes","Activo",new Date(2018-06-01),"Gustavo Ordoñez");
         objReserva.setIdReserva(null);
-        objReserva.setLogin("Administrador");
+        objReserva.setIdUsuario(objUsuario);
         objReserva.setFechahorareg(new Date());
         objReserva.setFechahoramod(new Date());
         objReserva.setModificadopor("Administrador");

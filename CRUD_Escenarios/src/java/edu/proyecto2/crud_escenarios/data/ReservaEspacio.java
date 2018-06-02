@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ReservaEspacio.findAll", query = "SELECT r FROM ReservaEspacio r")
     , @NamedQuery(name = "ReservaEspacio.findByIdReserva", query = "SELECT r FROM ReservaEspacio r WHERE r.idReserva = :idReserva")
-    , @NamedQuery(name = "ReservaEspacio.findByLogin", query = "SELECT r FROM ReservaEspacio r WHERE r.login = :login")
     , @NamedQuery(name = "ReservaEspacio.findByNombre", query = "SELECT r FROM ReservaEspacio r WHERE r.nombre = :nombre")
     , @NamedQuery(name = "ReservaEspacio.findByFechaini", query = "SELECT r FROM ReservaEspacio r WHERE r.fechaini = :fechaini")
     , @NamedQuery(name = "ReservaEspacio.findByFechafin", query = "SELECT r FROM ReservaEspacio r WHERE r.fechafin = :fechafin")
@@ -53,11 +52,6 @@ public class ReservaEspacio implements Serializable {
     @Basic(optional = false)
     @Column(name = "idReserva")
     private Integer idReserva;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "login")
-    private String login;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -110,6 +104,9 @@ public class ReservaEspacio implements Serializable {
     @JoinColumn(name = "idEspacio", referencedColumnName = "idEspacio")
     @ManyToOne(optional = false)
     private EspacioDeportivo idEspacio;
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
+    @ManyToOne(optional = false)
+    private Usuario idUsuario;
 
     public ReservaEspacio() {
     }
@@ -118,9 +115,8 @@ public class ReservaEspacio implements Serializable {
         this.idReserva = idReserva;
     }
 
-    public ReservaEspacio(Integer idReserva, String login, String nombre, Date fechaini, Date fechafin, String tipo, boolean esfija, String descripcion, String registradopor, String modificadopor, Date fechahorareg, Date fechahoramod) {
+    public ReservaEspacio(Integer idReserva, String nombre, Date fechaini, Date fechafin, String tipo, boolean esfija, String descripcion, String registradopor, String modificadopor, Date fechahorareg, Date fechahoramod) {
         this.idReserva = idReserva;
-        this.login = login;
         this.nombre = nombre;
         this.fechaini = fechaini;
         this.fechafin = fechafin;
@@ -139,14 +135,6 @@ public class ReservaEspacio implements Serializable {
 
     public void setIdReserva(Integer idReserva) {
         this.idReserva = idReserva;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getNombre() {
@@ -235,6 +223,14 @@ public class ReservaEspacio implements Serializable {
 
     public void setIdEspacio(EspacioDeportivo idEspacio) {
         this.idEspacio = idEspacio;
+    }
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override
