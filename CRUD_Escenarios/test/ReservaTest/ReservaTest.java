@@ -8,6 +8,9 @@ package ReservaTest;
 import edu.proyecto2.crud_escenarios.bean.ReservaBean;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +32,7 @@ public class ReservaTest {
     List<ReservaEspacio> reservasTest;
     
     
-    public ReservaTest() {
+    public ReservaTest() throws ParseException {
         reservas = new ArrayList<ReservaEspacio>();
         reservasTest = new ArrayList<ReservaEspacio>();
         llenar();
@@ -47,19 +50,30 @@ public class ReservaTest {
         assertTrue(reservas.get(0).equals(reservasTest.get(0)));
     }
     
-    private void llenar(){
-        Date fechafin = new Date();
-        Date fechahorareg = new Date();
-        Date fechaini = new Date();
+    private void llenar() throws ParseException{
+        //Date fechafin = new Date();
+        DateFormat format = new SimpleDateFormat("YYYY-MM-dd");
+        DateFormat formatHora = new SimpleDateFormat("YYYY-MM-dd, HH:mm:ss");
+        //Date fechahorareg = new Date();
+        //Date fechaIni = new Date();
         Integer idReserva = new Integer(1);
         EspacioDeportivo idEspacio = new EspacioDeportivo();
+        
+        String inicio = "2018-05-10";
+        Date fechaIni = format.parse(inicio);
+        
+        String fin = "2018-05-21";
+        Date fechaFin = format.parse(fin);
+        
+        String registro = "2018-05-21, 12:35:30";
+        Date fechaHoraReg = formatHora.parse(fin);
         
         ReservaEspacio reserva = new ReservaEspacio();
         reserva.setDescripcion("Entreno");
         reserva.setEsfija(true);
-        reserva.setFechafin(fechafin);
-        reserva.setFechahorareg(fechahorareg);
-        reserva.setFechaini(fechaini);
+        reserva.setFechafin(fechaFin);
+        reserva.setFechahorareg(fechaHoraReg);
+        reserva.setFechaini(fechaIni);
         reserva.setIdEspacio(idEspacio);
         reserva.setIdReserva(idReserva);
         reserva.setLogin("mortadela1");
