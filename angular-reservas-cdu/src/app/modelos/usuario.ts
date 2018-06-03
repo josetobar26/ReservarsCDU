@@ -1,10 +1,17 @@
+import { ReservaEspacio } from "../reservaespacio";
+
 export class Usuario {
     constructor(
     	public idUsuario: number,
-	    public login: string,
-	    public password: string,
-	    public nombres: string,
-	    public apellidos: string,
-	    public rol: string,
+		public login: String,
+		public codigo: String,
+	    public password: String,
+	    public nombres: String,
+	    public apellidos: String,
+		public rol: String,
+		public estado:String,
+		public fechaactivacion:Date,
+		public activadopor:String,
+		public reservaEspacioList:ReservaEspacio[]
     ) {  }  
 }

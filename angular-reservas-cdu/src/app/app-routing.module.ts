@@ -9,6 +9,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Autenticacion } from './autenticacion/index';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/index';
+import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
+
 
 
 const routes: Routes = [
@@ -16,6 +18,7 @@ const routes: Routes = [
   { path: 'espaciodeportivos', component: EspacioDeportivosComponent, canActivate: [Autenticacion]  },
   { path: 'agregarescenario', component: AgregarescenarioComponent },
   { path: 'horariofijo', component: HorarioFijoComponent , canActivate: [Autenticacion]},
+  { path: 'validarusuarios', component: ValidarusuariosComponent , canActivate: [Autenticacion]},
   { path: 'mostrarfoto', component: MostrarFotoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },

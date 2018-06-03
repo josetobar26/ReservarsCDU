@@ -10,9 +10,11 @@ import com.google.gson.Gson;
 import edu.proyecto2.crud_escenarios.bean.DeporteBean;
 import edu.proyecto2.crud_escenarios.bean.EscenarioBean;
 import edu.proyecto2.crud_escenarios.bean.ReservaBean;
+import edu.proyecto2.crud_escenarios.bean.UsuarioBean;
 import edu.proyecto2.crud_escenarios.data.Deporte;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
+import edu.proyecto2.crud_escenarios.data.Usuario;
 import edu.proyecto2.crud_escenarios.util.ConverterJson;
 import java.io.BufferedReader;
 import java.util.List;
@@ -47,6 +49,7 @@ public class EscenarioRest {
     private EscenarioBean escenariobean=new EscenarioBean();
     private DeporteBean deportebean=new DeporteBean();
     private ReservaBean reservabean=new ReservaBean();
+    private UsuarioBean usuariobean= new UsuarioBean();
     private ConverterJson converteJson=new ConverterJson();
     
     @GET
@@ -134,6 +137,8 @@ public class EscenarioRest {
         System.out.println("-- " + reservaJson);
         final Gson gson = new Gson();
         final ReservaEspacio reservaObj = gson.fromJson(reservaJson, ReservaEspacio.class);
+        
+        
         System.out.println(": " + reservaObj.getNombre());
         System.out.println(": " + reservaObj.getFechaini());
         
@@ -187,7 +192,27 @@ public class EscenarioRest {
         }   
          return reservasJson.toString();
     }
+    @GET
+    @Path("Usuarios")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getUsuariosNoValidos(){
+          final Gson gson = new Gson();
+          String nuevo=gson.toJson(this.usuariobean.getUsuariosNoValidos());
+          System.out.println(nuevo);
+          return nuevo;
+    }
     
+    @PUT
+    @Path("CambiarUsuario")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public String CambiarEstadoUsuario(String usuarioJson)  {
+        final Gson gson = new Gson();
+        final Usuario usuarioObj = gson.fromJson(usuarioJson, Usuario.class);
+        this.usuariobean.edit(usuarioObj);
+        return "true";
+    }
+
     
     
     

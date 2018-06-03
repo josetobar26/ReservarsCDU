@@ -30,6 +30,7 @@ import { Autenticacion } from './autenticacion/index';
 import { JwtInterceptor } from './helpers/index';
 import { AlertService, UsuarioService, AutenticacionService} from './servicios/index';
 import { AlertComponent } from './alertas/index';
+import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
 
 
 
@@ -49,7 +50,8 @@ registerLocaleData(localeEs);
     CalendarComponent,
     LoginComponent,
     RegistroComponent,
-    AlertComponent
+    AlertComponent,
+    ValidarusuariosComponent
   ],
   imports: [
     BrowserModule,
