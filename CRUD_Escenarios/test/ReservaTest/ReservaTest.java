@@ -8,6 +8,7 @@ package ReservaTest;
 import edu.proyecto2.crud_escenarios.bean.ReservaBean;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
+import edu.proyecto2.crud_escenarios.data.Usuario;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,13 +52,12 @@ public class ReservaTest {
     }
     
     private void llenar() throws ParseException{
-        //Date fechafin = new Date();
         DateFormat format = new SimpleDateFormat("YYYY-MM-dd");
         DateFormat formatHora = new SimpleDateFormat("YYYY-MM-dd, HH:mm:ss");
-        //Date fechahorareg = new Date();
-        //Date fechaIni = new Date();
         Integer idReserva = new Integer(1);
         EspacioDeportivo idEspacio = new EspacioDeportivo();
+        Integer id = new Integer("2");
+        Usuario usuario = new Usuario(id);
         
         String inicio = "2018-05-10";
         Date fechaIni = format.parse(inicio);
@@ -66,7 +66,7 @@ public class ReservaTest {
         Date fechaFin = format.parse(fin);
         
         String registro = "2018-05-21, 12:35:30";
-        Date fechaHoraReg = formatHora.parse(fin);
+        Date fechaHoraReg = formatHora.parse(registro);
         
         ReservaEspacio reserva = new ReservaEspacio();
         reserva.setDescripcion("Entreno");
@@ -75,8 +75,8 @@ public class ReservaTest {
         reserva.setFechahorareg(fechaHoraReg);
         reserva.setFechaini(fechaIni);
         reserva.setIdEspacio(idEspacio);
-        reserva.setIdReserva(idReserva);
-        reserva.setLogin("mortadela1");
+        reserva.setIdUsuario(usuario);
+        reserva.setIdReserva(idReserva);        
         reserva.setModificadopor("Pantoja");
         reserva.setNombre("Pantoja");
         reserva.setRegistradopor("Pantoja");
