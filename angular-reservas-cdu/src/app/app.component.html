@@ -1,10 +1,20 @@
 <!-- INICIA LA CABECERA DE LA PAGINA -->
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top " style="background: linear-gradient(to right, #003366 30%, #0099cc 100%)">
   <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
+  <!-- LOGO DE LA UNIVERSIDAD-->
+
+  <a class="navbar-brand">
+    <img src="../assets/img/logo.png" width="205" height="100" alt="">
+  </a>
+
+  <!-- Barra separadora-->
+  <a class="navbar-brand">
+    <img src="../assets/img/barra.png" width="2" height="50" alt="">
+  </a>
   <!-- NOMBRE DE LA APLICACIÓN-->
 
   <a class="navbar-brand" href="/">
@@ -46,7 +56,7 @@
 <br>
 
 <!-- MENSAJE DE BIENVENIDA -->
-<div class="alert alert-success text-center">
+<div class="alert alert-success text-center" style= "margin-top: 50px ">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>¡Bienvenido!</strong> Puedes Dirigirte a realizar cualquier acción
 </div>
@@ -68,7 +78,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Si, Cerrar Sesión</button>
+        <a type="button" class="btn btn-primary" href="/login">Si, Cerrar Sesión</a>
       </div>
     </div>
   </div>
@@ -77,14 +87,14 @@
 
 
 <!-- MENU LATERAL VERTICAL -->
-<div class="container-fluid">
+<div class="container-fluid" style= "margin-top: 70px ">
   <div class="row">
     <nav class="col-sm-3 col-md-2.5 hidden-xs-down bg-faded sidebar">
 
       <!-- GESTION DE ESPACIOS DEPORTIVOS-->
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="#" data-toggle="collapse" data-target="#espacios">Gestión de Escenarios Deportivos
+          <a class="nav-link active" style="background-color: #6cb8df" href="#" data-toggle="collapse" data-target="#espacios" >Gestión de Escenarios Deportivos
             <!-- ICONO -->
             <img src="../assets/img/escenarios.svg" width="30" height="30" alt="">
           </a>
@@ -106,7 +116,7 @@
       <!-- GESTION DE ELEMENTOS DEPORTIVOS-->
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="#" data-toggle="collapse" data-target="#elementos">Gestión de Elementos Deportivos
+          <a class="nav-link active"  style="background-color: #6cb8df" href="#" data-toggle="collapse" data-target="#elementos">Gestión de Elementos Deportivos
             <!-- ICONO -->
             <img src="../assets/img/balon.svg" width="30" height="30" alt="">
             <span class="sr-only">(current)</span>
@@ -127,6 +137,7 @@
     </nav>
     <!-- CIERRA NAV-->
     <div class="col-sm-9">
+      <alert></alert>
       <router-outlet></router-outlet>
       <app-messages></app-messages>
     </div>

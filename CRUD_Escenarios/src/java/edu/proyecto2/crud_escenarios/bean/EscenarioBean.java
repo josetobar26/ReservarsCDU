@@ -8,10 +8,14 @@ package edu.proyecto2.crud_escenarios.bean;
 import edu.proyecto2.crud_escenarios.data.Deporte;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import edu.proyecto2.crud_escenarios.jpa.EspacioDeportivoJpaController;
+import edu.proyecto2.crud_escenarios.jpa.exceptions.IllegalOrphanException;
+import edu.proyecto2.crud_escenarios.jpa.exceptions.NonexistentEntityException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -162,6 +166,34 @@ public class EscenarioBean  implements Serializable{
         espacio.setFoto(f1); 
        ctrl.create(espacio);
     }
+     public void edit(EspacioDeportivo espacio) {
+          byte[] f1= "dasdsaopdiosap".getBytes(); 
+        espacio.setFoto(f1);
+        espacio.setTipofoto("image/jpeg");
+        try {
+            emf = Persistence.createEntityManagerFactory("CRUD_EscenariosPU");
+            EspacioDeportivoJpaController ctrl = new EspacioDeportivoJpaController(emf);
+//        espacio.setIdEspacio(null);
+            ctrl.edit(espacio);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(EscenarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EscenarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void delete(Integer idEspacio) {
+        emf = Persistence.createEntityManagerFactory("CRUD_EscenariosPU");
+        EspacioDeportivoJpaController ctrl = new EspacioDeportivoJpaController(emf);
+        try {
+            ctrl.destroy(idEspacio);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(EscenarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(EscenarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public String confirmar(){
         return "listardeportes";
     }

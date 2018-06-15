@@ -79,9 +79,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-2"></div>
+                        
+                                <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
+          
                             <div class="col-sm-10">
-                                <textarea id="descripcion" name="descripcion" [(ngModel)]="espacioSelected.descripcion" class="form-control" [readonly]="!required" #descripcion="ngModel"></textarea>
+                                <textarea id="descripcion" name="descripcion" [(ngModel)]="espacioSelected.descripcion" class="form-control" [readonly]="!required" #descripcion="ngModel">{{espacioSelected.descripcion}}</textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -115,7 +117,7 @@
                                         <tr *ngFor="let deporte of deportesAnexados">
                                             <td>{{deporte.nombre}}</td>
                                             <td>
-                                                <a href="" (click)="quitarDeporte(deporte)"><i class="fa fa-times"></i></a>
+                                                <a *ngIf="accion == 'Registrar' || accion == 'Actualizar'" href="" (click)="quitarDeporte(deporte)"><i class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
                                 </table>
@@ -127,7 +129,7 @@
                         <div class="col-sm-2"></div>
                         <div class="col-sm-10">
                             <button type="button" name="btnCancelar" class="btn btn-danger" data-dismiss="modal" value="Cerrar"><i class="fa fa-times"></i> Cerrar</button>
-                            <button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar" class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
+                            <button *ngIf="accion != 'Detalle'" type="submit" name="btnEnviar"  class="btn btn-success" [disabled]="!espacioDeportivoForm.form.valid"><i class="{{iconBtnSubmit}}"></i> {{accion}}</button>
                         </div>
                     </div>
                 </form>

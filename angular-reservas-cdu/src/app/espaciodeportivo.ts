@@ -1,4 +1,5 @@
 import { Deporte } from './deporte';
+import { ReservaEspacio } from './reservaespacio';
 export class EspacioDeportivo {
     constructor(
 	public idEspacio: number,
@@ -6,6 +7,8 @@ export class EspacioDeportivo {
 	public estado: string,
 	public ubicacion: string,
 	public deporteList: Deporte[],
-	public descripcion?: string
+	public reservaEspacioList:ReservaEspacio[],
+	public descripcion?: string,
+
     ) {  }
 }

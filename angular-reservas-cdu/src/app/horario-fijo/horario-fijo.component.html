@@ -11,13 +11,13 @@
 
 	<label for="label">Seleccionar Un escenario:</label>
 	<div *ngIf="escenarios">
-	<select [(ngModel)]="selectedEspacio"  class="form-control" id="selectEscenarioDe">
+	<select [(ngModel)]="selectedEspacio"  class="form-control" id="selectEscenarioDe"  >
 		<option *ngFor="let espaciodeportivo of escenarios" [ngValue]="espaciodeportivo">{{espaciodeportivo.nombre}}</option>
 	</select>
 
 		<div *ngIf="selectedEspacio">
 			<br>
-			<app-calendar></app-calendar>	
+			<app-calendar [selectEspacio]="selectedEspacio" ></app-calendar>	
 		</div>
 	</div>
 </div>

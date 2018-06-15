@@ -6,13 +6,22 @@ import { AgregarescenarioComponent } from './escenario/agregarescenario/agregare
 import { HorarioFijoComponent } from './horario-fijo/horario-fijo.component';
 import { MostrarFotoComponent } from './mostrar-foto/mostrar-foto.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Autenticacion } from './autenticacion/index';
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/index';
+import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
+
+
 
 const routes: Routes = [
-  { path: '', redirectTo: '/espaciodeportivos', pathMatch: 'full' },
-  { path: 'espaciodeportivos', component: EspacioDeportivosComponent },
+  { path: '', component: EspacioDeportivosComponent, canActivate: [Autenticacion] },
+  { path: 'espaciodeportivos', component: EspacioDeportivosComponent, canActivate: [Autenticacion]  },
   { path: 'agregarescenario', component: AgregarescenarioComponent },
-  { path: 'horariofijo', component: HorarioFijoComponent },
-  { path: 'mostrarfoto', component: MostrarFotoComponent }
+  { path: 'horariofijo', component: HorarioFijoComponent , canActivate: [Autenticacion]},
+  { path: 'validarusuarios', component: ValidarusuariosComponent , canActivate: [Autenticacion]},
+  { path: 'mostrarfoto', component: MostrarFotoComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegistroComponent },
 
 ];
 

@@ -1,10 +1,12 @@
+import { registerLocaleData } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule }     from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule } from 'angular-calendar';
+import localeEs from '@angular/common/locales/es';
 
 import { AppComponent } from './app.component';
 import { EspacioDeportivosComponent } from './espacio-deportivos/espacio-deportivos.component';
@@ -18,10 +20,22 @@ import { EdicionReservaComponent } from './edicion-reserva/edicion-reserva.compo
 import { MenuNavegacionComponent } from './menu-navegacion/menu-navegacion.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DemoUtilsModule } from '../demo-utils/module';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/index';
+
+import { fakeBackendProvider } from './helpers/index';
+import { Autenticacion } from './autenticacion/index';
+import { JwtInterceptor } from './helpers/index';
+import { AlertService, UsuarioService, AutenticacionService} from './servicios/index';
+import { AlertComponent } from './alertas/index';
+import { ValidarusuariosComponent } from './validarusuarios/validarusuarios.component';
 
 
 
 
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -33,18 +47,35 @@ import { DemoUtilsModule } from '../demo-utils/module';
     HorarioFijoComponent,
     EdicionReservaComponent,
     MenuNavegacionComponent,
-    CalendarComponent
+    CalendarComponent,
+    LoginComponent,
+    RegistroComponent,
+    AlertComponent,
+    ValidarusuariosComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule, 
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
     CalendarModule.forRoot(),
     DemoUtilsModule
   ],
-  providers: [MessageService,EspaciodeportivoService],
+  providers: [MessageService,EspaciodeportivoService,
+    Autenticacion,
+    AutenticacionService,
+    AlertService,
+    UsuarioService,
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: JwtInterceptor,
+        multi: true
+    },
+
+    // provider used to create fake backend
+    fakeBackendProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,9 +1,10 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { Deporte } from '../deporte';
 import { EspaciodeportivoService } from '../espaciodeportivo.service';
 import { EdicionReservaService } from '../edicion-reserva.service';
 import { EspacioDeportivo} from '../espaciodeportivo';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarComponent } from '../calendar/calendar.component'
 
 
 @Component({
@@ -14,8 +15,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HorarioFijoComponent implements OnInit {
 
+  @ViewChild (CalendarComponent) calendario;
   private deportes:Deporte[];
-
+ 
   private horaI = "7 am";
   private horaF = "9 am";
   selectedDeporte:Deporte ;
@@ -41,6 +43,7 @@ export class HorarioFijoComponent implements OnInit {
   this.getEscenarioDeportivos(event.idDeporte)    
 
   }
+ 
   getEscenarioDeportivos(idDeporte):void{
     this.espacioService.getEscenariosforid(idDeporte).subscribe(escenarios=> this.escenarios = escenarios);
   }

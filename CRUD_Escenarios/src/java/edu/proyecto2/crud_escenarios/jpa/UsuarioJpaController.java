@@ -5,16 +5,19 @@
  */
 package edu.proyecto2.crud_escenarios.jpa;
 
-import edu.proyecto2.crud_escenarios.data.Usuario;
-import edu.proyecto2.crud_escenarios.jpa.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
+import edu.proyecto2.crud_escenarios.data.Usuario;
+import edu.proyecto2.crud_escenarios.jpa.exceptions.IllegalOrphanException;
+import edu.proyecto2.crud_escenarios.jpa.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -32,11 +35,29 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) {
+        if (usuario.getReservaEspacioList() == null) {
+            usuario.setReservaEspacioList(new ArrayList<ReservaEspacio>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<ReservaEspacio> attachedReservaEspacioList = new ArrayList<ReservaEspacio>();
+            for (ReservaEspacio reservaEspacioListReservaEspacioToAttach : usuario.getReservaEspacioList()) {
+                reservaEspacioListReservaEspacioToAttach = em.getReference(reservaEspacioListReservaEspacioToAttach.getClass(), reservaEspacioListReservaEspacioToAttach.getIdReserva());
+                attachedReservaEspacioList.add(reservaEspacioListReservaEspacioToAttach);
+            }
+            usuario.setReservaEspacioList(attachedReservaEspacioList);
             em.persist(usuario);
+            for (ReservaEspacio reservaEspacioListReservaEspacio : usuario.getReservaEspacioList()) {
+                Usuario oldIdUsuarioOfReservaEspacioListReservaEspacio = reservaEspacioListReservaEspacio.getIdUsuario();
+                reservaEspacioListReservaEspacio.setIdUsuario(usuario);
+                reservaEspacioListReservaEspacio = em.merge(reservaEspacioListReservaEspacio);
+                if (oldIdUsuarioOfReservaEspacioListReservaEspacio != null) {
+                    oldIdUsuarioOfReservaEspacioListReservaEspacio.getReservaEspacioList().remove(reservaEspacioListReservaEspacio);
+                    oldIdUsuarioOfReservaEspacioListReservaEspacio = em.merge(oldIdUsuarioOfReservaEspacioListReservaEspacio);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,12 +66,45 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void edit(Usuario usuario) throws NonexistentEntityException, Exception {
+    public void edit(Usuario usuario) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Usuario persistentUsuario = em.find(Usuario.class, usuario.getIdUsuario());
+            List<ReservaEspacio> reservaEspacioListOld = persistentUsuario.getReservaEspacioList();
+            List<ReservaEspacio> reservaEspacioListNew = usuario.getReservaEspacioList();
+            List<String> illegalOrphanMessages = null;
+            for (ReservaEspacio reservaEspacioListOldReservaEspacio : reservaEspacioListOld) {
+                if (!reservaEspacioListNew.contains(reservaEspacioListOldReservaEspacio)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain ReservaEspacio " + reservaEspacioListOldReservaEspacio + " since its idUsuario field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<ReservaEspacio> attachedReservaEspacioListNew = new ArrayList<ReservaEspacio>();
+            for (ReservaEspacio reservaEspacioListNewReservaEspacioToAttach : reservaEspacioListNew) {
+                reservaEspacioListNewReservaEspacioToAttach = em.getReference(reservaEspacioListNewReservaEspacioToAttach.getClass(), reservaEspacioListNewReservaEspacioToAttach.getIdReserva());
+                attachedReservaEspacioListNew.add(reservaEspacioListNewReservaEspacioToAttach);
+            }
+            reservaEspacioListNew = attachedReservaEspacioListNew;
+            usuario.setReservaEspacioList(reservaEspacioListNew);
             usuario = em.merge(usuario);
+            for (ReservaEspacio reservaEspacioListNewReservaEspacio : reservaEspacioListNew) {
+                if (!reservaEspacioListOld.contains(reservaEspacioListNewReservaEspacio)) {
+                    Usuario oldIdUsuarioOfReservaEspacioListNewReservaEspacio = reservaEspacioListNewReservaEspacio.getIdUsuario();
+                    reservaEspacioListNewReservaEspacio.setIdUsuario(usuario);
+                    reservaEspacioListNewReservaEspacio = em.merge(reservaEspacioListNewReservaEspacio);
+                    if (oldIdUsuarioOfReservaEspacioListNewReservaEspacio != null && !oldIdUsuarioOfReservaEspacioListNewReservaEspacio.equals(usuario)) {
+                        oldIdUsuarioOfReservaEspacioListNewReservaEspacio.getReservaEspacioList().remove(reservaEspacioListNewReservaEspacio);
+                        oldIdUsuarioOfReservaEspacioListNewReservaEspacio = em.merge(oldIdUsuarioOfReservaEspacioListNewReservaEspacio);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -68,7 +122,7 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,6 +133,17 @@ public class UsuarioJpaController implements Serializable {
                 usuario.getIdUsuario();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<ReservaEspacio> reservaEspacioListOrphanCheck = usuario.getReservaEspacioList();
+            for (ReservaEspacio reservaEspacioListOrphanCheckReservaEspacio : reservaEspacioListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the ReservaEspacio " + reservaEspacioListOrphanCheckReservaEspacio + " in its reservaEspacioList field has a non-nullable idUsuario field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(usuario);
             em.getTransaction().commit();

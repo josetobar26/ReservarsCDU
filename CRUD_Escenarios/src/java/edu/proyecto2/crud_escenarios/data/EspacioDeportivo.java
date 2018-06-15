@@ -96,7 +96,7 @@ public class EspacioDeportivo implements Serializable {
         this.idEspacio = idEspacio;
     }
 
-    public EspacioDeportivo(Integer idEspacio, String nombre, String ubicacion, String descripcion, String estado, byte[] foto, String tipofoto) {
+     public EspacioDeportivo(Integer idEspacio, String nombre, String ubicacion, String descripcion, String estado, byte[] foto, String tipofoto, List<Deporte> deporteList) {
         this.idEspacio = idEspacio;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -104,6 +104,7 @@ public class EspacioDeportivo implements Serializable {
         this.estado = estado;
         this.foto = foto;
         this.tipofoto = tipofoto;
+        this.deporteList = deporteList;
     }
 
     public Integer getIdEspacio() {

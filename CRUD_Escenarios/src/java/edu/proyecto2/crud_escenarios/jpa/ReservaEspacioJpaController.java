@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import edu.proyecto2.crud_escenarios.data.EspacioDeportivo;
 import edu.proyecto2.crud_escenarios.data.ReservaEspacio;
+import edu.proyecto2.crud_escenarios.data.Usuario;
 import edu.proyecto2.crud_escenarios.jpa.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -42,10 +43,19 @@ public class ReservaEspacioJpaController implements Serializable {
                 idEspacio = em.getReference(idEspacio.getClass(), idEspacio.getIdEspacio());
                 reservaEspacio.setIdEspacio(idEspacio);
             }
+            Usuario idUsuario = reservaEspacio.getIdUsuario();
+            if (idUsuario != null) {
+                idUsuario = em.getReference(idUsuario.getClass(), idUsuario.getIdUsuario());
+                reservaEspacio.setIdUsuario(idUsuario);
+            }
             em.persist(reservaEspacio);
             if (idEspacio != null) {
                 idEspacio.getReservaEspacioList().add(reservaEspacio);
                 idEspacio = em.merge(idEspacio);
+            }
+            if (idUsuario != null) {
+                idUsuario.getReservaEspacioList().add(reservaEspacio);
+                idUsuario = em.merge(idUsuario);
             }
             em.getTransaction().commit();
         } finally {
@@ -63,9 +73,15 @@ public class ReservaEspacioJpaController implements Serializable {
             ReservaEspacio persistentReservaEspacio = em.find(ReservaEspacio.class, reservaEspacio.getIdReserva());
             EspacioDeportivo idEspacioOld = persistentReservaEspacio.getIdEspacio();
             EspacioDeportivo idEspacioNew = reservaEspacio.getIdEspacio();
+            Usuario idUsuarioOld = persistentReservaEspacio.getIdUsuario();
+            Usuario idUsuarioNew = reservaEspacio.getIdUsuario();
             if (idEspacioNew != null) {
                 idEspacioNew = em.getReference(idEspacioNew.getClass(), idEspacioNew.getIdEspacio());
                 reservaEspacio.setIdEspacio(idEspacioNew);
+            }
+            if (idUsuarioNew != null) {
+                idUsuarioNew = em.getReference(idUsuarioNew.getClass(), idUsuarioNew.getIdUsuario());
+                reservaEspacio.setIdUsuario(idUsuarioNew);
             }
             reservaEspacio = em.merge(reservaEspacio);
             if (idEspacioOld != null && !idEspacioOld.equals(idEspacioNew)) {
@@ -75,6 +91,14 @@ public class ReservaEspacioJpaController implements Serializable {
             if (idEspacioNew != null && !idEspacioNew.equals(idEspacioOld)) {
                 idEspacioNew.getReservaEspacioList().add(reservaEspacio);
                 idEspacioNew = em.merge(idEspacioNew);
+            }
+            if (idUsuarioOld != null && !idUsuarioOld.equals(idUsuarioNew)) {
+                idUsuarioOld.getReservaEspacioList().remove(reservaEspacio);
+                idUsuarioOld = em.merge(idUsuarioOld);
+            }
+            if (idUsuarioNew != null && !idUsuarioNew.equals(idUsuarioOld)) {
+                idUsuarioNew.getReservaEspacioList().add(reservaEspacio);
+                idUsuarioNew = em.merge(idUsuarioNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -109,6 +133,11 @@ public class ReservaEspacioJpaController implements Serializable {
             if (idEspacio != null) {
                 idEspacio.getReservaEspacioList().remove(reservaEspacio);
                 idEspacio = em.merge(idEspacio);
+            }
+            Usuario idUsuario = reservaEspacio.getIdUsuario();
+            if (idUsuario != null) {
+                idUsuario.getReservaEspacioList().remove(reservaEspacio);
+                idUsuario = em.merge(idUsuario);
             }
             em.remove(reservaEspacio);
             em.getTransaction().commit();
